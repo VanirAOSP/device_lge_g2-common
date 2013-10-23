@@ -176,5 +176,6 @@ BOARD_RECOVERY_SWIPE := true
 
 # Flags
 COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
+BOARD_USES_QC_TIME_SERVICES := true
 
 -include vendor/lge/galbi/BoardConfigVendor.mk
