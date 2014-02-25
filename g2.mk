@@ -127,6 +127,8 @@ PRODUCT_PACKAGES += \
     libdashplayer \
     qcmediaplayer
 
+PRODUCT_BOOT_JARS += qcmediaplayer
+
 # Hardware codecs
 #PRODUCT_PROPERTY_OVERRIDES += \
 #    qcom.hw.aac.encoder=true
