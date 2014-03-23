@@ -22,7 +22,7 @@ LOCAL_PATH := $(call my-dir)
 # hw/<SENSORS_HARDWARE_MODULE_ID>.<ro.product.board>.so
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := sensors.hammerhead
+LOCAL_MODULE := sensors.g2
 
 LOCAL_PRELINK_MODULE := false
 LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
