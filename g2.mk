@@ -39,6 +39,11 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/lge/g2-common/configs/bcmdhd.cal:system/etc/wifi/bcmdhd.cal
 
+# kernel tweaks
+PRODUCT_COPY_FILES += \
+    device/lge/g2-common/configs/00_frandom:system/etc/init.d/00_frandom \
+    device/lge/g2-common/configs/99mpdecRenamer:system/etc/init.d/99mpdecRenamer
+
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
@@ -119,6 +124,28 @@ PRODUCT_PACKAGES += \
     libOmxVdecHevc \
     libOmxVenc
 
+# Hardware codecs
+PRODUCT_PROPERTY_OVERRIDES += \
+    qcom.hw.aac.encoder=true
+
+PRODUCT_PACKAGES += \
+    libOmxAacEnc \
+    libOmxAmrEnc \
+    libOmxEvrcEnc \
+    libOmxQcelp13Enc
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    debug.sf.hw=1 \
+    debug.egl.hw=1 \
+    debug.composition.type=gpu \
+    debug.enable.wl_log=1 \
+    persist.hwc.mdpcomp.enable=true \
+    debug.mdpcomp.logs=0 \
+    debug.qctwa.statusbar=1 \
+    debug.qctwa.preservebuf=1 \
+    debug.qc.hardware=true \
+    com.qc.hardware=true
+
 PRODUCT_PACKAGES += \
     audio.primary.msm8974 \
     audio.a2dp.default \
@@ -136,7 +163,7 @@ PRODUCT_PACKAGES += \
     libqomx_core \
     libmmcamera_interface \
     libmmjpeg_interface \
-    camera.g2-common \
+    camera.g2 \
     mm-jpeg-interface-test \
     mm-qcamera-app
 
@@ -187,9 +214,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=480
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.hwc.mdpcomp.enable=true
-
-PRODUCT_PROPERTY_OVERRIDES += \
     ro.hwui.texture_cache_size=72 \
     ro.hwui.layer_cache_size=48 \
     ro.hwui.r_buffer_cache_size=8 \
@@ -214,11 +238,7 @@ PRODUCT_PACKAGES += \
     loki_unpatch
 
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.bt.bdaddr_path=/data/misc/bdaddr
-
-# Local wrapper for fixups
-PRODUCT_PACKAGES += \
-    camera.g2
+    ro.bt.bdaddr_path=/data/misc/bdaddr
 
 # Set sensor streaming rate
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -267,6 +287,16 @@ PRODUCT_PROPERTY_OVERRIDES += \
     mmp.enable.3g2=true \
     mm.enable.smoothstreaming=true
 
+# Smoothness Tweaks
+PRODUCT_PROPERTY_OVERRIDES += \
+    windowsmgr.max_events_per_sec=300 \
+    debug.performance.tuning=1 \
+    video.accelerate.hw=1 \
+    ro.max.fling_velocity=12000 \
+    ro.min.fling_velocity=8000 \
+    ro.config.disable.hw_accel=false \
+    persist.sys.ui.hw=1
+
 # Do not power down SIM card when modem is sent to Low Power Mode.
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.radio.apm_sim_not_pwdn=1 \
@@ -296,6 +326,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     audio.offload.buffer.size.kb=32 \
     audio.offload.gapless.enabled=false \
     av.offload.enable=true \
+    audio.offload.min.duration.secs=30 \
     ro.config.vc_call_vol_steps=12 \
     ro.config.vc_call_vol_default=8
 

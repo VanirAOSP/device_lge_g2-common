@@ -180,3 +180,5 @@
 /dev/block/mmcblk0p13     0660   system     wifi
 /dev/btlock               0660   bluetooth  bluetooth
 /dev/rfkill               0660   wifi       wifi
+
+/dev/hw_random            0660   system     system
