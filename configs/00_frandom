@@ -1,6 +1,4 @@
-
-<!-- saved from url=(0128)https://raw.githubusercontent.com/LiquidSmooth/android_device_lge_hammerhead/c52f12a063d5614d369543896bb9d8b1747d9ccc/00_frandom -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><style type="text/css"></style><style type="text/css"></style></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">#!/system/bin/sh
+#!/system/bin/sh
 # Script to launch frandom at boot by Ryuinferno @ XDA
 
 chmod 644 /dev/frandom
@@ -11,5 +9,3 @@ ln /dev/frandom /dev/random
 chmod 644 /dev/random
 ln /dev/erandom /dev/urandom
 chmod 644 /dev/urandom
-
-</pre></body></html>

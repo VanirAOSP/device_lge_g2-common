@@ -1,6 +1,4 @@
-
-<!-- saved from url=(0082)https://raw.githubusercontent.com/AICP/device_lge_hammerhead/kitkat/99mpdecRenamer -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><style type="text/css"></style><style type="text/css"></style></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">#!/system/bin/sh
+#!/system/bin/sh
 
 if [[ -f /system/bin/mpdecision ]];
 then
@@ -10,4 +8,3 @@ then
 else
      busybox echo "File already renamed or it doesn't exist"
 fi
-</pre></body></html>
