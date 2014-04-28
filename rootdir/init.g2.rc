@@ -19,6 +19,7 @@ import init.g2.usb.rc
 on early-init
     mount debugfs debugfs /sys/kernel/debug
     chown system system /sys/kernel/debug/kgsl/proc
+    write /sys/block/mmcblk0/queue/scheduler noop
 
 on init
     chmod 0701 /mnt/media_rw
@@ -94,6 +95,7 @@ on boot
     chown bluetooth bluetooth /proc/bluetooth/sleep/btwrite
     restorecon /proc/bluetooth/sleep/lpm
     restorecon /proc/bluetooth/sleep/btwrite
+    chmod 0644 /sys/devices/platform/tspdrv/nforce_timed
 
     #bluetooth UART dev
     chown bluetooth net_bt_stack /sys/devices/platform/msm_serial_hs.0/clock
@@ -298,7 +300,7 @@ on post-fs-data
     #write /sys/devices/system/cpu/cpufreq/ondemand/sync_freq 960000
     #write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_any_cpu_load 80
 
-    #write /sys/class/devfreq/qcom,cpubw.30/governor "cpubw_hwmon"
+    write /sys/class/devfreq/fdb00000.qcom,kgsl-3d0/governor "conservative"
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "interactive"
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "interactive"
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "interactive"
@@ -309,10 +311,11 @@ on post-fs-data
     write /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 1
     write /sys/devices/system/cpu/cpufreq/interactive/target_loads "85 1500000:90 1800000:70"
     write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 40000
-    write /sys/devices/system/cpu/cpufreq/interactive/timer_rate 30000
-    write /sys/module/cpu_boost/parameters/boost_ms 20
-    write /sys/module/cpu_boost/parameters/sync_threshold 1728000
+     write /sys/devices/system/cpu/cpufreq/interactive/timer_rate 20000
     write /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor 100000
+    write /sys/devices/system/cpu/cpufreq/interactive/timer_slack 20000
+    write /sys/module/cpu_boost/parameters/boost_ms 10
+    write /sys/module/cpu_boost/parameters/sync_threshold 1728000
     write /sys/module/cpu_boost/parameters/input_boost_freq 1497600
     write /sys/module/cpu_boost/parameters/input_boost_ms 40
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 300000
@@ -375,6 +378,7 @@ on property:init.svc.wpa_supplicant=stopped
 
 on property:sys.boot_completed=1
     # Enable Power modes
+    write /sys/block/mmcblk0/queue/scheduler row
     write /sys/module/lpm_levels/enable_low_power/l2 4
     write /sys/module/msm_pm/modes/cpu0/power_collapse/suspend_enabled 1
     write /sys/module/msm_pm/modes/cpu1/power_collapse/suspend_enabled 1
@@ -502,6 +506,11 @@ service vss_init /vendor/bin/vss_init
     user root
     group root
     disabled
+
+service gsiff_daemon /system/bin/gsiff_daemon
+    class late_start
+    user gps
+    group gps net_raw misc
 
 service time_daemon /system/bin/time_daemon
     class late_start

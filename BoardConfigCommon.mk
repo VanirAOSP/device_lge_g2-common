@@ -18,42 +18,41 @@ TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_SMP := true
 TARGET_ARCH := arm
-TARGET_CPU_SMP := true
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_VARIANT := krait
 TARGET_ARCH_VARIANT_CPU := cortex-a15
 TARGET_ARCH_VARIANT_FPU := neon-vfpv4
+#TARGET_GLOBAL_CFLAGS += -ffast-math -fsingle-precision-constant
+#TARGET_GLOBAL_CPPFLAGS += -ffast-math -fsingle-precision-constant
 
 # Krait optimizations
 TARGET_USE_KRAIT_BIONIC_OPTIMIZATION := true
+TARGET_USE_QCOM_BIONIC_OPTIMIZATION := true
 TARGET_USE_KRAIT_PLD_SET := true
 TARGET_KRAIT_BIONIC_PLDOFFS := 10
 TARGET_KRAIT_BIONIC_PLDTHRESH := 10
 TARGET_KRAIT_BIONIC_BBTHRESH := 64
 TARGET_KRAIT_BIONIC_PLDSIZE := 64
-TARGET_USE_QCOM_BIONIC_OPTIMIZATION := true
-TARGET_ARCH_VARIANT_CPU := cortex-a15
 
 # Qcom hardware
 BOARD_USES_QCOM_HARDWARE := true
-COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
 TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
 
 # Enable various prefetch optimizations
 COMMON_GLOBAL_CFLAGS += -D__ARM_USE_PLD -D__ARM_CACHE_LINE_SIZE=64
 
 TARGET_NO_BOOTLOADER := true
+TARGET_NO_RADIOIMAGE := true
 
+# kernel stuff
 BOARD_KERNEL_BASE := 0x00000000
-BOARD_KERNEL_PAGESIZE := 2048
-BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=g2 user_debug=31 msm_rtb.filter=0x0
+BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=g2 user_debug=31 msm_rtb.filter=0x0 mdss_mdp.panel=1:dsi:0:qcom,mdss_dsi_g2_lgd_cmd
 BOARD_MKBOOTIMG_ARGS  := --ramdisk_offset 0x05000000 --tags_offset 0x04800000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
-
 BOARD_CUSTOM_BOOTIMG_MK := device/lge/g2-common/releasetools/mkbootimg.mk
 TARGET_KERNEL_SOURCE := kernel/lge/msm8974
-TARGET_KERNEL_CUSTOM_TOOLCHAIN := linaro-4.8
+# TARGET_KERNEL_CUSTOM_TOOLCHAIN := linaro-4.8
 
 # Shader cache config options
 # Maximum size of the  GLES Shaders that can be cached for reuse.
@@ -115,6 +114,9 @@ NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 TARGET_USES_OVERLAY := true
 TARGET_USES_C2D_COMPOSITION := true
 
+TARGET_QCOM_DISPLAY_VARIANT := caf
+TARGET_USES_QCOM_BSP := true
+
 # file system
 BOARD_HAS_LARGE_FILESYSTEM := true
 TARGET_USERIMAGES_USE_EXT4 := true
@@ -162,7 +164,8 @@ TARGET_PROVIDES_LIBLIGHT := true
 
 # Camera
 USE_DEVICE_SPECIFIC_CAMERA := true
-COMMON_GLOBAL_CFLAGS += -DLG_CAMERA_HARDWARE -DNEEDS_VECTORIMPL_SYMBOLS
+COMMON_GLOBAL_CFLAGS += -DLG_CAMERA_HARDWARE 
+#-DNEEDS_VECTORIMPL_SYMBOLS
 
 # Recovery
 RECOVERY_FSTAB_VERSION := 2
@@ -176,4 +179,4 @@ COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
 # Kernel handles input boosting
 #TARGET_POWERHAL_NO_TOUCH_BOOST := true
 
--include vendor/lge/g2/BoardConfigVendor.mk
+-include vendor/lge/galbi/BoardConfigVendor.mk

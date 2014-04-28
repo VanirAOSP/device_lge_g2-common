@@ -104,16 +104,17 @@ PRODUCT_PACKAGES += \
     LiveWallpapersPicker \
     librs_jni
 
+# Graphics
 PRODUCT_PACKAGES += \
-    gralloc.msm8974 \
     libgenlock \
+    liboverlay \
     hwcomposer.msm8974 \
-    memtrack.msm8974 \
-    libqdutils \
-    libqdMetaData
+    gralloc.msm8974 \
+    copybit.msm8974 \
+    memtrack.msm8974
 
 PRODUCT_PACKAGES += \
-	hwaddrs
+    hwaddrs
 
 PRODUCT_PACKAGES += \
     libc2dcolorconvert \
@@ -122,7 +123,9 @@ PRODUCT_PACKAGES += \
     libmm-omxcore \
     libOmxVdec \
     libOmxVdecHevc \
-    libOmxVenc
+    libOmxVenc \
+    libdashplayer \
+    qcmediaplayer
 
 # Hardware codecs
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -169,7 +172,8 @@ PRODUCT_PACKAGES += \
 
 # GPS configuration
 PRODUCT_COPY_FILES += \
-    device/lge/g2-common/configs/gps.conf:system/etc/gps.conf
+    device/lge/g2-common/configs/gps.conf:system/etc/gps.conf \
+    device/lge/g2-common/configs/izat.conf:system/etc/izat.conf
 
 # GPS
 PRODUCT_PACKAGES += \
@@ -329,6 +333,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     audio.offload.min.duration.secs=30 \
     ro.config.vc_call_vol_steps=12 \
     ro.config.vc_call_vol_default=8
+
+# for powerhal
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.extension_library=/vendor/lib/libqc-opt.so
 
 # Setup custom emergency number list based on the MCC. This is needed by RIL
 PRODUCT_PROPERTY_OVERRIDES += \
