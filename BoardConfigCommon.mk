@@ -22,8 +22,6 @@ TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_VARIANT := krait
 TARGET_ARCH_VARIANT_CPU := cortex-a15
 TARGET_ARCH_VARIANT_FPU := neon-vfpv4
-#TARGET_GLOBAL_CFLAGS += -ffast-math -fsingle-precision-constant
-#TARGET_GLOBAL_CPPFLAGS += -ffast-math -fsingle-precision-constant
 
 # Krait optimizations
 TARGET_USE_KRAIT_BIONIC_OPTIMIZATION := true
@@ -155,7 +153,6 @@ HAVE_ADRENO_SOURCE:= false
 OVERRIDE_RS_DRIVER:= libRSDriver_adreno.so
 TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
 
-TARGET_TOUCHBOOST_FREQUENCY:= 1200
 TARGET_POWERHAL_VARIANT := qcom
 
 BOARD_NFC_HAL_SUFFIX := g2
@@ -178,8 +175,5 @@ BOARD_RECOVERY_SWIPE := true
 
 # Flags
 COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
-
-# Kernel handles input boosting
-#TARGET_POWERHAL_NO_TOUCH_BOOST := true
 
 -include vendor/lge/galbi/BoardConfigVendor.mk
