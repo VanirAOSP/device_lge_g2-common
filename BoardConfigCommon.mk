@@ -39,6 +39,9 @@ TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
 # Enable various prefetch optimizations
 COMMON_GLOBAL_CFLAGS += -D__ARM_USE_PLD -D__ARM_CACHE_LINE_SIZE=64
 
+# use qcom static libs
+WITH_QC_PERF := true
+
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
 
