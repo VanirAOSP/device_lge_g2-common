@@ -178,10 +178,11 @@ PRODUCT_COPY_FILES += \
 # GPS
 PRODUCT_PACKAGES += \
     libloc_adapter \
-    libloc_eng \
-    libloc_api_v02 \
-    libgps.utils \
     gps.msm8974
+
+# powerhal
+PRODUCT_PACKAGES += \
+    power.msm8974
 
 # NFC packages
 PRODUCT_PACKAGES += \
