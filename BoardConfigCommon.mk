@@ -53,7 +53,7 @@ BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
 BOARD_CUSTOM_BOOTIMG_MK := device/lge/g2-common/releasetools/mkbootimg.mk
 TARGET_KERNEL_SOURCE := kernel/lge/msm8974
-# TARGET_KERNEL_CUSTOM_TOOLCHAIN := linaro-4.8
+TARGET_KERNEL_CUSTOM_TOOLCHAIN := linaro-4.9
 
 # Shader cache config options
 # Maximum size of the  GLES Shaders that can be cached for reuse.
@@ -100,10 +100,10 @@ BOARD_USES_SECURE_SERVICES := true
 
 TARGET_BOARD_PLATFORM := msm8974
 TARGET_BOOTLOADER_BOARD_NAME := galbi
+
+# gps
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := $(TARGET_BOARD_PLATFORM)
 TARGET_NO_RPC := true
-
-BOARD_EGL_CFG := device/lge/g2-common/configs/egl.cfg
 
 # graphics
 USE_OPENGL_RENDERER := true
@@ -113,7 +113,11 @@ TARGET_USES_ION := true
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 TARGET_USES_OVERLAY := true
 TARGET_USES_C2D_COMPOSITION := true
+BOARD_EGL_CFG := device/lge/g2-common/configs/egl.cfg
 
+HAVE_ADRENO_SOURCE:= false
+OVERRIDE_RS_DRIVER:= libRSDriver_adreno.so
+TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
 TARGET_QCOM_DISPLAY_VARIANT := caf
 TARGET_USES_QCOM_BSP := true
 
@@ -140,21 +144,15 @@ TARGET_RELEASETOOLS_EXTENSIONS := device/lge/g2-common/releasetools
 BOARD_HARDWARE_CLASS := device/lge/g2-common/cmhw/
 BOARD_RIL_CLASS := ../../../device/lge/g2-common/ril/
 
+
+# sepoilcy
 BOARD_SEPOLICY_DIRS := \
        device/lge/g2-common/sepolicy
 
-# Define kernel config for inline building
-TARGET_KERNEL_SOURCE := kernel/lge/msm8974
-
-# The list below is order dependent
 BOARD_SEPOLICY_UNION := \
        device.te \
        app.te \
        file_contexts
-
-HAVE_ADRENO_SOURCE:= false
-OVERRIDE_RS_DRIVER:= libRSDriver_adreno.so
-TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
 
 TARGET_POWERHAL_VARIANT := qcom
 

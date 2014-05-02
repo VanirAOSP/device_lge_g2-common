@@ -177,8 +177,7 @@ PRODUCT_COPY_FILES += \
 
 # GPS
 PRODUCT_PACKAGES += \
-    libloc_adapter \
-    gps.msm8974
+    libloc_adapter
 
 # powerhal
 PRODUCT_PACKAGES += \
