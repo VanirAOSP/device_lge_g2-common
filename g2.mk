@@ -173,7 +173,8 @@ PRODUCT_PACKAGES += \
 # GPS configuration
 PRODUCT_COPY_FILES += \
     device/lge/g2-common/configs/gps.conf:system/etc/gps.conf \
-    device/lge/g2-common/configs/izat.conf:system/etc/izat.conf
+    device/lge/g2-common/configs/izat.conf:system/etc/izat.conf \
+    device/lge/g2-common/configs/sec_config:system/etc/sec_config 
 
 # GPS
 PRODUCT_PACKAGES += \
