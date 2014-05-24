@@ -369,7 +369,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 
 # Input resampling configuration
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.input.noresample=1
+    ro.input.noresample=0
 
 # Dexopt system to /cache
 PRODUCT_PROPERTY_OVERRIDES += \
