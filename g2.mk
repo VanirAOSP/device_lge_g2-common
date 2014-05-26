@@ -174,7 +174,14 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     device/lge/g2-common/configs/gps.conf:system/etc/gps.conf \
     device/lge/g2-common/configs/izat.conf:system/etc/izat.conf \
+    device/lge/g2-common/configs/flp.conf:system/etc/flp.conf \
     device/lge/g2-common/configs/sec_config:system/etc/sec_config 
+
+# Sensor Configs
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/ramdisk/sensors.sh:root/sensors.sh \
+    $(LOCAL_PATH)/configs/sap.conf:system/etc/sap.conf \
+    $(LOCAL_PATH)/configs/sensor_def_common.conf:system/etc/sensor_def_common.conf
 
 # GPS
 PRODUCT_PACKAGES += \
