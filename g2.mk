@@ -39,6 +39,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/lge/g2-common/configs/bcmdhd.cal:system/etc/wifi/bcmdhd.cal
 
+# Prepatch to fix BT/WiFi bus lockups
+PRODUCT_COPY_FILES += \
+    device/lge/g2-common/bluetooth/bcm4335_prepatch.hcd:system/vendor/firmware/bcm4335_prepatch.hcd
+
 # kernel tweaks
 PRODUCT_COPY_FILES += \
     device/lge/g2-common/configs/00_frandom:system/etc/init.d/00_frandom \
