@@ -331,6 +331,7 @@ on post-fs-data
     # hotplug
     write /sys/module/msm_hotplug/down_lock_duration 500
     write /sys/module/msm_hotplug/boost_lock_duration 2500
+    write /sys/module/msm_hotplug/update_rates "200 5:100 50:50 350:200"
 
     # min freq
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 300000
