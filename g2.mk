@@ -236,6 +236,10 @@ PRODUCT_PACKAGES += \
     loki_flash \
     loki_unpatch
 
+# Needed by /system/bin/cnd
+PRODUCT_PACKAGES += \
+	libxml2
+
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.bt.bdaddr_path=/data/misc/bdaddr
 
