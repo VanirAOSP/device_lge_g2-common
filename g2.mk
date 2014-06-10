@@ -72,11 +72,7 @@ PRODUCT_COPY_FILES += \
 
 
 # NFCEE access control
-ifeq ($(TARGET_BUILD_VARIANT),user)
-    NFCEE_ACCESS_PATH := $(LOCAL_PATH)/nfc/nfcee_access.xml
-else
-    NFCEE_ACCESS_PATH := $(LOCAL_PATH)/nfc/nfcee_access_debug.xml
-endif
+NFCEE_ACCESS_PATH := $(LOCAL_PATH)/nfc/nfcee_access.xml
 
 # NFC access control + feature files + configuration
 PRODUCT_COPY_FILES += \
