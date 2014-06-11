@@ -583,6 +583,12 @@
         <ctl name="DEC2 Volume" value="65" />
     </path>
 
+    <path name="speaker-mic-aec">
+        <path name="adc3" />
+        <ctl name="ADC3 Volume" value="14" />
+        <ctl name="DEC4 Volume" value="88" />
+    </path>
+
     <path name="voice-headphones">
         <path name="headphones" />
         <ctl name="COMP1 Switch" value="0" />
@@ -623,7 +629,7 @@
     </path>
 
     <path name="speaker-and-headphones-in-call">
-        <ctl name="COMP1 Switch" value="0" />
+        <ctl name="COMP1 Switch" value="1" />
         <ctl name="HPHL Volume" value="11" />
         <ctl name="HPHR Volume" value="11" />
         <ctl name="RX1 Digital Volume" value="52" />

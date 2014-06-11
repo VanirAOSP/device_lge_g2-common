@@ -72,11 +72,7 @@ PRODUCT_COPY_FILES += \
 
 
 # NFCEE access control
-ifeq ($(TARGET_BUILD_VARIANT),user)
-    NFCEE_ACCESS_PATH := $(LOCAL_PATH)/nfc/nfcee_access.xml
-else
-    NFCEE_ACCESS_PATH := $(LOCAL_PATH)/nfc/nfcee_access_debug.xml
-endif
+NFCEE_ACCESS_PATH := $(LOCAL_PATH)/nfc/nfcee_access.xml
 
 # NFC access control + feature files + configuration
 PRODUCT_COPY_FILES += \
@@ -144,9 +140,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     debug.sf.hw=1 \
     debug.egl.hw=1 \
-    debug.composition.type=gpu \
+    debug.composition.type=c2d \
     debug.enable.wl_log=1 \
-    persist.hwc.mdpcomp.enable=true \
+    persist.hwc.mdpcomp.enable=false \
     debug.mdpcomp.logs=0 \
     debug.qctwa.statusbar=1 \
     debug.qctwa.preservebuf=1 \
@@ -314,17 +310,11 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 
 # Audio Configuration
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.qc.sdk.audio.ssr=false \
-    ro.qc.sdk.audio.fluencetype=fluencepro \
-    persist.audio.fluence.mode=endfire \
-    persist.audio.handset.mic=digital \
-    persist.audio.voicecall.mic=0 \
-    persist.audio.voice.clarity=none \
-    persist.audio.aanc.enable=false \
-    persist.audio.handset_rx_type=DEFAULT \
-    persist.audio.nsenabled=ON \
-    persist.speaker.prot.enable=false \
-    persist.audio.spkcall_2mic=OFF \
+    persist.audio.handset.mic.type=digital \
+    persist.audio.dualmic.config=endfire \
+    persist.audio.fluence.voicecall=true \
+    persist.audio.fluence.voicerec=false \
+    persist.audio.fluence.speaker=true \
     af.resampler.quality=255 \
     audio.offload.buffer.size.kb=32 \
     audio.offload.gapless.enabled=false \
