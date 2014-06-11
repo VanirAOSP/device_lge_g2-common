@@ -43,7 +43,7 @@ BOARD_MKBOOTIMG_ARGS  := --ramdisk_offset 0x05000000 --tags_offset 0x04800000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
 BOARD_CUSTOM_BOOTIMG_MK := device/lge/g2-common/releasetools/mkbootimg.mk
-TARGET_KERNEL_SOURCE := kernel/lge/4.4.2
+TARGET_KERNEL_SOURCE := kernel/lge/msm8974
 
 # Audio
 BOARD_USES_ALSA_AUDIO:= true
