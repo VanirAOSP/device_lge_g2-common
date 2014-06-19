@@ -128,8 +128,8 @@ PRODUCT_PACKAGES += \
     qcmediaplayer
 
 # Hardware codecs
-PRODUCT_PROPERTY_OVERRIDES += \
-    qcom.hw.aac.encoder=true
+#PRODUCT_PROPERTY_OVERRIDES += \
+#    qcom.hw.aac.encoder=true
 
 PRODUCT_PACKAGES += \
     libOmxAacEnc \
