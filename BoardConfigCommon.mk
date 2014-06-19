@@ -146,7 +146,9 @@ BOARD_SEPOLICY_UNION := \
        app.te \
        file_contexts
 
+# powerhal
 TARGET_POWERHAL_VARIANT := qcom
+TARGET_USES_CPU_BOOST_HINT := true
 
 BOARD_NFC_HAL_SUFFIX := g2
 
