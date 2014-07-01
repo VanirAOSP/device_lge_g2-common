@@ -23,6 +23,10 @@ TARGET_CPU_VARIANT := krait
 TARGET_ARCH_VARIANT_CPU := cortex-a15
 TARGET_ARCH_VARIANT_FPU := neon-vfpv4
 
+# compile options
+TARGET_ENABLE_PREBUILT_CLANG := true
+TARGET_KERNEL_CUSTOM_TOOLCHAIN := linaro-4.9
+
 # Krait optimizations
 TARGET_USE_KRAIT_BIONIC_OPTIMIZATION := true
 TARGET_USE_QCOM_BIONIC_OPTIMIZATION := true
@@ -56,7 +60,6 @@ BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
 BOARD_CUSTOM_BOOTIMG_MK := device/lge/g2-common/releasetools/mkbootimg.mk
 TARGET_KERNEL_SOURCE := kernel/lge/msm8974
-TARGET_KERNEL_CUSTOM_TOOLCHAIN := linaro-4.9
 
 # Shader cache config options
 # Maximum size of the  GLES Shaders that can be cached for reuse.
