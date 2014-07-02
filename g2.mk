@@ -276,8 +276,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.ril.v3=qcomdsds
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    wifi.interface=wlan0 \
-    wifi.supplicant_scan_interval=15
+    wifi.interface=wlan0
 
 # props for the MM modules
 PRODUCT_PROPERTY_OVERRIDES += \
