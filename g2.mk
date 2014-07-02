@@ -320,7 +320,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.audio.fluence.voicerec=false \
     persist.audio.fluence.speaker=true \
     af.resampler.quality=255 \
-    audio.offload.buffer.size.kb=32 \
+    audio.offload.buffer.size.kb=64 \
     audio.offload.gapless.enabled=false \
     av.offload.enable=true
 
