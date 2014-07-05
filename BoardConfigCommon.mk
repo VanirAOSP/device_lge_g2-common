@@ -46,9 +46,6 @@ COMMON_GLOBAL_CFLAGS += -D__ARM_USE_PLD -D__ARM_CACHE_LINE_SIZE=64
 # use qcom static libs
 WITH_QC_PERF := true
 
-# pre dex-opt to prevent overheating a boot
-WITH_DEXPREOPT := true
-
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
 
