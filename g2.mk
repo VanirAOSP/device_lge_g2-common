@@ -19,6 +19,7 @@
 #
 # Everything in this directory will become public
 
+# Ramdisk
 PRODUCT_COPY_FILES += \
     device/lge/g2-common/rootdir/init.g2.rc:root/init.g2.rc \
     device/lge/g2-common/rootdir/init.g2.usb.rc:root/init.g2.usb.rc \
@@ -29,6 +30,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/lge/g2-common/input/touch_dev.idc:system/usr/idc/touch_dev.idc
 
+# Media configs
 PRODUCT_COPY_FILES += \
     device/lge/g2-common/configs/audio_policy.conf:system/etc/audio_policy.conf \
     device/lge/g2-common/configs/mixer_paths.xml:system/etc/mixer_paths.xml \
@@ -104,7 +106,7 @@ PRODUCT_PACKAGES += \
     LiveWallpapersPicker \
     librs_jni
 
-# Graphics
+# Display hal
 PRODUCT_PACKAGES += \
     libgenlock \
     liboverlay \
@@ -116,6 +118,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     hwaddrs
 
+# Media hal
 PRODUCT_PACKAGES += \
     libc2dcolorconvert \
     libstagefrighthw \
@@ -125,32 +128,15 @@ PRODUCT_PACKAGES += \
     libOmxVdecHevc \
     libOmxVenc \
     libdashplayer \
-    qcmediaplayer
-
-PRODUCT_BOOT_JARS += qcmediaplayer
-
-# Hardware codecs
-#PRODUCT_PROPERTY_OVERRIDES += \
-#    qcom.hw.aac.encoder=true
-
-PRODUCT_PACKAGES += \
+    qcmediaplayer \
     libOmxAacEnc \
     libOmxAmrEnc \
     libOmxEvrcEnc \
     libOmxQcelp13Enc
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    debug.sf.hw=1 \
-    debug.egl.hw=1 \
-    debug.composition.type=dyn \
-    debug.enable.wl_log=1 \
-    persist.hwc.mdpcomp.enable=false \
-    debug.mdpcomp.logs=0 \
-    debug.qctwa.statusbar=1 \
-    debug.qctwa.preservebuf=1 \
-    debug.qc.hardware=true \
-    com.qc.hardware=true
+PRODUCT_BOOT_JARS += qcmediaplayer
 
+# Audio hal
 PRODUCT_PACKAGES += \
     audio.primary.msm8974 \
     audio.a2dp.default \
@@ -164,6 +150,7 @@ PRODUCT_PACKAGES += \
     libqcomvoiceprocessing \
     libqcomvoiceprocessingdescriptors
 
+# Camera
 PRODUCT_PACKAGES += \
     libqomx_core \
     libmmcamera_interface \
@@ -198,9 +185,11 @@ PRODUCT_PACKAGES += \
     Tag \
     com.android.nfc_extras
 
+# ion
 PRODUCT_PACKAGES += \
     libion
 
+# lights
 PRODUCT_PACKAGES += \
     lights.g2
 
@@ -240,7 +229,7 @@ PRODUCT_PACKAGES += \
 
 # Needed by /system/bin/cnd
 PRODUCT_PACKAGES += \
-	libxml2
+    libxml2
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.bt.bdaddr_path=/data/misc/bdaddr
@@ -277,6 +266,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.ril_class=LgeLteRIL \
     ro.telephony.ril.v3=qcomdsds
 
+# radio
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.radio.apm_sim_not_pwdn=1 \
+    persist.radio.mode_pref_nv10=1 \
+    persist.radio.add_power_save=1
+
 PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=wlan0
 
@@ -291,28 +286,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     mmp.enable.3g2=true \
     mm.enable.smoothstreaming=true
 
-# Smoothness Tweaks
-PRODUCT_PROPERTY_OVERRIDES += \
-    windowsmgr.max_events_per_sec=300 \
-    debug.performance.tuning=1 \
-    video.accelerate.hw=1 \
-    ro.max.fling_velocity=12000 \
-    ro.min.fling_velocity=8000 \
-    ro.config.disable.hw_accel=false \
-    persist.sys.ui.hw=1
-
-# Do not power down SIM card when modem is sent to Low Power Mode.
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.radio.apm_sim_not_pwdn=1 \
-    persist.radio.mode_pref_nv10=1
-
-# update 1x signal strength after 2s
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.radio.snapshot_enabled=1 \
-    persist.radio.snapshot_timer=2 \
-    persist.radio.add_power_save=1 \
-    persist.radio.use_cc_names=true
-
 # Audio Configuration
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.audio.handset.mic.type=digital \
@@ -325,30 +298,25 @@ PRODUCT_PROPERTY_OVERRIDES += \
     audio.offload.gapless.enabled=false \
     av.offload.enable=true
 
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.hwc.mdpcomp.enable=false \
+    debug.mdpcomp.logs=0 \
+    debug.qctwa.statusbar=1 \
+    debug.qctwa.preservebuf=1 \
+    debug.qc.hardware=true \
+    com.qc.hardware=true
+
 # for powerhal
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=/vendor/lib/libqc-opt.so
-
-# Setup custom emergency number list based on the MCC. This is needed by RIL
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.radio.custom_ecc=1
 
 # set default USB configuration
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp
 
-# Request modem to send PLMN name always irrespective
-# of display condition in EFSPN.
-# RIL uses this property.
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.radio.always_send_plmn=true
-
+# ril
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     rild.libpath=/vendor/lib/libril-qc-qmi-1.so
-
-# Input resampling configuration
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.input.noresample=0
 
 # Dexopt system to /cache
 PRODUCT_PROPERTY_OVERRIDES += \
