@@ -20,4 +20,6 @@
 <resources>
     <!-- Use ZSL mode for Qualcomm cameras -->
     <bool name="enableZSL">true</bool>
+    <!-- Allow HDR and ZSL together -->
+    <bool name="enableHDRWithZSL">true</bool>
 </resources>
