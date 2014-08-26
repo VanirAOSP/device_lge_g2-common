@@ -172,10 +172,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sap.conf:system/etc/sap.conf \
     $(LOCAL_PATH)/configs/sensor_def_common.conf:system/etc/sensor_def_common.conf
 
-# GPS
-PRODUCT_PACKAGES += \
-    libloc_adapter
-
 # powerhal
 PRODUCT_PACKAGES += \
     power.msm8974
@@ -233,6 +229,14 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.bt.bdaddr_path=/data/misc/bdaddr
+
+# GPS Configuration
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.qc.sdk.izat.premium_enabled=1 \
+    ro.qc.sdk.izat.service_mask=0x5 \
+    persist.gps.qc_nlp_in_use=0 \
+    ro.gps.agps_provider=1 \
+    persist.gps.qmienabled=true
 
 # Set sensor streaming rate
 PRODUCT_PROPERTY_OVERRIDES += \
