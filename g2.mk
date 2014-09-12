@@ -299,8 +299,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.audio.fluence.speaker=true \
     af.resampler.quality=4 \
     audio.offload.buffer.size.kb=64 \
-    audio.offload.gapless.enabled=false \
-    av.offload.enable=true
+    av.offload.enable=true \
+    audio.offload.gapless.enabled=true \
+    av.offload.enable=true \
+    av.streaming.offload.enable=true \
+    audio.offload.pcm.enable=true \
+    audio.offload.24bit.enable=1
 
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.hwc.mdpcomp.enable=false \

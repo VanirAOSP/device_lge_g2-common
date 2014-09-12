@@ -465,6 +465,7 @@
         <ctl name="RX7 Digital Volume" value="64" />
         <ctl name="SPK DRV Volume" value="7" />
         <ctl name="SPK DAC Switch" value="1" />
+        <ctl name="COMP0 Switch" value="1" />
         <ctl name="RX7 HPF cut off" value="MIN_3DB_150Hz" />
     </path>
 
@@ -618,6 +619,7 @@
     <path name="speaker-and-headphones">
         <path name="headphones" />
         <ctl name="COMP1 Switch" value="0" />
+        <ctl name="COMP0 Switch" value="1" />
         <ctl name="HPHL Volume" value="11" />
         <ctl name="HPHR Volume" value="11" />
         <ctl name="RX1 Digital Volume" value="52" />
