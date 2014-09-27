@@ -306,14 +306,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     audio.offload.pcm.enable=true \
     audio.offload.24bit.enable=1
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.hwc.mdpcomp.enable=false \
-    debug.mdpcomp.logs=0 \
-    debug.qctwa.statusbar=1 \
-    debug.qctwa.preservebuf=1 \
-    debug.qc.hardware=true \
-    com.qc.hardware=true
-
 # for powerhal
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=/vendor/lib/libqc-opt.so
