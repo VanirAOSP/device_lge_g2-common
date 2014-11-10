@@ -47,8 +47,7 @@ PRODUCT_COPY_FILES += \
 
 # kernel tweaks
 PRODUCT_COPY_FILES += \
-    device/lge/g2-common/configs/00_frandom:system/etc/init.d/00_frandom \
-    device/lge/g2-common/configs/99mpdecRenamer:system/etc/init.d/99mpdecRenamer
+    device/lge/g2-common/configs/00_frandom:system/etc/init.d/00_frandom
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
@@ -117,6 +116,9 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     hwaddrs
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    qcom.thermal=thermal-engine
 
 # Media hal
 PRODUCT_PACKAGES += \
@@ -320,7 +322,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 
 # Dexopt system to /cache
 PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.dexopt-data-only=0
+    dalvik.vm.dexopt-data-only=1
 
 # setup dalvik vm configs.
 $(call inherit-product, frameworks/native/build/phone-xxhdpi-2048-dalvik-heap.mk)
