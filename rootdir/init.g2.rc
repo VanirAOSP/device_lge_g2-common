@@ -15,6 +15,7 @@
 #
 
 import init.g2.usb.rc
+import init.vmware.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
