@@ -148,7 +148,6 @@ TARGET_RELEASETOOLS_EXTENSIONS := device/lge/g2-common/releasetools
 BOARD_HARDWARE_CLASS := device/lge/g2-common/cmhw/
 BOARD_RIL_CLASS := ../../../device/lge/g2-common/ril/
 
-
 # sepoilcy
 BOARD_SEPOLICY_DIRS := \
        device/lge/g2-common/sepolicy
@@ -175,7 +174,7 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
 BOARD_RECOVERY_SWIPE := true
 
+BOARD_CHARGER_ENABLE_SUSPEND := true
+
 # Flags
 COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
-BOARD_USES_QC_TIME_SERVICES := true
-

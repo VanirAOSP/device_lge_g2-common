@@ -162,6 +162,10 @@ PRODUCT_PACKAGES += \
     mm-jpeg-interface-test \
     mm-qcamera-app
 
+# GPS packages
+PRODUCT_PACKAGES += \
+    libgps.utils
+
 # GPS configuration
 PRODUCT_COPY_FILES += \
     device/lge/g2-common/configs/gps.conf:system/etc/gps.conf \
