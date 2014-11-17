@@ -21,11 +21,11 @@
 
 # Ramdisk
 PRODUCT_COPY_FILES += \
-    device/lge/g2-common/rootdir/init.g2.rc:root/init.g2.rc \
-    device/lge/g2-common/rootdir/init.g2.usb.rc:root/init.g2.usb.rc \
-    device/lge/g2-common/rootdir/init.vmware.rc:root/init.vmware.rc \
-    device/lge/g2-common/rootdir/fstab.g2:root/fstab.g2 \
-    device/lge/g2-common/rootdir/ueventd.g2.rc:root/ueventd.g2.rc
+    device/lge/g2-common/init.g2.rc:root/init.g2.rc \
+    device/lge/g2-common/init.g2.usb.rc:root/init.g2.usb.rc \
+    device/lge/g2-common/init.vmware.rc:root/init.vmware.rc \
+    device/lge/g2-common/fstab.g2:root/fstab.g2 \
+    device/lge/g2-common/ueventd.g2.rc:root/ueventd.g2.rc
 
 # Prebuilt input device calibration files
 PRODUCT_COPY_FILES += \
