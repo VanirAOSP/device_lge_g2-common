@@ -512,12 +512,6 @@ service cnd /system/bin/cnd
     class late_start
     socket cnd stream 660 root inet
 
-service vss_init /vendor/bin/vss_init
-    class late_start
-    user root
-    group root
-    disabled
-
 service gsiff_daemon /system/bin/gsiff_daemon
     class late_start
     user gps
