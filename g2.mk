@@ -98,7 +98,8 @@ PRODUCT_PACKAGES += \
 # NFC packages
 PRODUCT_PACKAGES += \
     Tag \
-    com.android.nfc_extras
+    com.android.nfc_extras \
+    libxml2
 
 # NFCEE access control
 ifeq ($(TARGET_BUILD_VARIANT),user)
