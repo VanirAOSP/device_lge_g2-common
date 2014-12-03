@@ -33,6 +33,7 @@ PRODUCT_COPY_FILES += \
 
 
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/audio_effects.conf:system/etc/audio_effects.conf \
     $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf \
     $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
@@ -123,10 +124,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Audio Configuration
 PRODUCT_PROPERTY_OVERRIDES += \
-	persist.audio.fluence.voicecall=true \
+	persist.audio.handset.mic.type=digital \
 	persist.audio.dualmic.config=endfire \
+	persist.audio.fluence.speaker=true \
+	persist.audio.fluence.voicecall=true \
+	persist.audio.fluence.voicerec=false \
 	af.resampler.quality=4 \
-	audio.offload.buffer.size.kb=32 \
+	audio.offload.buffer.size.kb=64 \
 	audio.offload.gapless.enabled=false \
 	av.offload.enable=true
 
@@ -184,6 +188,12 @@ PRODUCT_PACKAGES += \
 	libstagefrighthw \
 	libc2dcolorconvert
 
+# Audio effects
+PRODUCT_PACKAGES += \
+	libqcomvisualizer \
+	libqcomvoiceprocessing \
+	libqcomvoiceprocessingdescriptors
+
 PRODUCT_PACKAGES += \
 	libloc_adapter \
 	libloc_eng \
@@ -205,7 +215,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	wifi.interface=wlan0 \
-	wifi.supplicant_scan_interval=15
+	wifi.supplicant_scan_interval=150
 
 # Enable AAC 5.1 output
 PRODUCT_PROPERTY_OVERRIDES += \
