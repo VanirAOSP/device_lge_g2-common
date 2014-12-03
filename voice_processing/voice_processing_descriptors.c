@@ -31,7 +31,7 @@ const effect_descriptor_t qcom_product_aec_descriptor = {
         0,
         0,
         "Acoustic Echo Canceler",
-        "Qualcomm Fluence for Hammerhead"
+        "Qualcomm Fluence for G2"
 };
 
 // Noise suppression 25ec95c0-1fcf-11e3-b5f8-0002a5d5c51b
@@ -43,7 +43,7 @@ const effect_descriptor_t qcom_product_ns_descriptor = {
         0,
         0,
         "Noise Suppression",
-        "Qualcomm Fluence for Hammerhead"
+        "Qualcomm Fluence for G2"
 };
 
 //ENABLE_AGC
@@ -56,6 +56,5 @@ const effect_descriptor_t qcom_product_ns_descriptor = {
 //        0,
 //        0,
 //        "Automatic Gain Control",
-//        "Qualcomm Fluence for Hammerhead"
+//        "Qualcomm Fluence for G2"
 //};
-
