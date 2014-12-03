@@ -191,6 +191,7 @@ PRODUCT_PACKAGES += \
 # Audio effects
 PRODUCT_PACKAGES += \
 	libqcomvisualizer \
+	libqcompostprocbundle \
 	libqcomvoiceprocessing \
 	libqcomvoiceprocessingdescriptors
 
