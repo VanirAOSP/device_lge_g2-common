@@ -119,7 +119,6 @@ BOARD_BLUEDROID_VENDOR_CONF := device/lge/g2-common/bluetooth/vnd_g2.txt
 # GPS
 TARGET_NO_RPC := true
 
-BOARD_NFC_HAL_SUFFIX := g2
 BOARD_CHARGER_ENABLE_SUSPEND := true
 
 BOARD_HARDWARE_CLASS := device/lge/g2-common/cmhw/
