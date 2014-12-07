@@ -130,9 +130,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	persist.audio.fluence.speaker=true \
 	persist.audio.fluence.voicecall=true \
 	persist.audio.fluence.voicerec=false \
-	af.resampler.quality=4 \
 	audio.offload.buffer.size.kb=64 \
-	audio.offload.gapless.enabled=false \
+	audio.offload.gapless.enabled=true \
 	av.offload.enable=true
 
 # Do not power down SIM card when modem is sent to Low Power Mode.
@@ -187,7 +186,8 @@ PRODUCT_PACKAGES += \
 	libOmxVenc \
 	libOmxCore \
 	libstagefrighthw \
-	libc2dcolorconvert
+	libc2dcolorconvert \
+	mediaserver
 
 # Audio effects
 PRODUCT_PACKAGES += \
