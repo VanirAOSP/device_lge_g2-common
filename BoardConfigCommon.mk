@@ -21,6 +21,8 @@ TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_VARIANT := krait
 ARCH_ARM_HAVE_TLS_REGISTER := true
+TARGET_KERNEL_TOOLCHAIN_VERSION := linaro-4.9
+TARGET_KERNEL_USE_AOSP_TOOLCHAIN := false
 
 TARGET_GLOBAL_CFLAGS += -O3 -mtune=cortex-a15 -mcpu=cortex-a15 -mfpu=neon-vfpv4 -mfloat-abi=softfp -mvectorize-with-neon-quad
 
