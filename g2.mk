@@ -130,8 +130,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	persist.audio.fluence.speaker=true \
 	persist.audio.fluence.voicecall=true \
 	persist.audio.fluence.voicerec=false \
-	audio.offload.buffer.size.kb=64 \
-	audio.offload.gapless.enabled=true \
+	audio.offload.buffer.size.kb=32 \
+	audio.offload.gapless.enabled=false \
 	av.offload.enable=true
 
 # Do not power down SIM card when modem is sent to Low Power Mode.
@@ -187,7 +187,10 @@ PRODUCT_PACKAGES += \
 	libOmxCore \
 	libstagefrighthw \
 	libc2dcolorconvert \
-	mediaserver
+	mediaserver \
+	libaudioresampler \
+	libaudioflinger \
+	libserviceutility
 
 # Audio effects
 PRODUCT_PACKAGES += \
@@ -217,7 +220,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	wifi.interface=wlan0 \
-	wifi.supplicant_scan_interval=150
+	wifi.supplicant_scan_interval=250
 
 # Enable AAC 5.1 output
 PRODUCT_PROPERTY_OVERRIDES += \
