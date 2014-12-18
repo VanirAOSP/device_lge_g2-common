@@ -187,10 +187,7 @@ PRODUCT_PACKAGES += \
 	libOmxCore \
 	libstagefrighthw \
 	libc2dcolorconvert \
-	mediaserver \
-	libaudioresampler \
-	libaudioflinger \
-	libserviceutility
+	mediaserver
 
 # Audio effects
 PRODUCT_PACKAGES += \
