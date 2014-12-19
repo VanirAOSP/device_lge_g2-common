@@ -74,7 +74,7 @@ PRODUCT_COPY_FILES += \
 
 # GPS configuration
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/gps.conf:system/etc/gps.conf
+    $(LOCAL_PATH)/$(TARGET_DEVICE)gps.conf:system/etc/gps.conf
 
 # IRSC
 PRODUCT_COPY_FILES += \
