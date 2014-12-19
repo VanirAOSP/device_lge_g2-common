@@ -1,25 +1,21 @@
 import init.g2.usb.rc
 
 on early-init
-    mkdir /sys 0771 system system
     mount debugfs debugfs /sys/kernel/debug
     write /sys/class/leds/lcd-backlight/brightness 150
 
 on init
-
     # Set permissions for persist partition
     mkdir /persist 0771 system system
     mkdir /firmware 0771 system system
+    mkdir /storage 0550 system sdcard_r
     mkdir /storage/usb 0000 system system
     mkdir /factory 0775 system system
-    mkdir /persist-lg 0755 system system
-    mkdir /mpt 0755 system system
 
+    # Setup permissions for shell/media/sdcard locations
     mkdir /mnt/media_rw 0700 media_rw media_rw
     mkdir /mnt/media_rw/usb 0775 system system
-    # See storage config details at http://source.android.com/tech/storage/
     mkdir /mnt/shell/emulated 0700 shell shell
-    mkdir /storage 0550 system sdcard_r
     mkdir /storage/emulated 0555 root root
 
     export EXTERNAL_STORAGE /storage/emulated/legacy
@@ -40,18 +36,42 @@ on init
     setprop persist.radio.custom_ecc_voice "{515:117},{452:113,114,115}"
     setprop persist.radio.custom_ecc_hard "911,*911,#911,112,999,000,08,118,120,122,110,119,995,111,113,125,127,133"
 
-    mkdir /sns 0775 system system
-    mkdir /sns/cal 0771 system system
-
 on charger-fs
     mount ext4 /dev/block/platform/msm_sdcc.1/by-name/system  /system ro barrier=1
     start rmt_storage
 
 on fs
     mount_all ./fstab.g2
-    restorecon_recursive /sns
     write /sys/kernel/boot_adsp/boot 1
     setprop ro.crypto.fuse_sdcard true
+
+    # create mount point for LG Specific functions
+    mkdir /sns 0755 system system
+    mkdir /sns/cal 0771 system system
+    mkdir /persist-lg 0755 system system
+    mkdir /persist-lg/lgdata 0771 radio radio
+    mkdir /mpt 0755 system system
+
+    # Executing tune2fs to reserve some region in /data. (40MB)
+    exec /system/bin/tune2fs -u system -r 10240 /dev/block/platform/msm_sdcc.1/by-name/userdata
+
+    wait /dev/block/platform/msm_sdcc.1/by-name/sns
+    exec /system/bin/e2fsck -p /dev/block/platform/msm_sdcc.1/by-name/sns
+    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/sns /sns nosuid nodev barrier=1 noatime noauto_da_alloc errors=continue
+
+    restorecon_recursive /sns
+
+    wait /dev/block/platform/msm_sdcc.1/by-name/drm
+    exec /system/bin/e2fsck -p /dev/block/platform/msm_sdcc.1/by-name/drm
+    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/drm /persist-lg nosuid nodev barrier=1 noatime noauto_da_alloc errors=continue
+
+    wait /dev/block/platform/msm_sdcc.1/by-name/mpt
+    exec /system/bin/e2fsck -p /dev/block/platform/msm_sdcc.1/by-name/mpt
+    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/mpt /mpt nodev nosuid barrier=1 noatime noauto_da_alloc errors=continue
+
+    # NFC: create data/nfc for nv storage
+    mkdir /data/nfc 770 nfc nfc
+    mkdir /data/nfc/param 770 nfc nfc
 
 on early-boot
     # set RLIMIT_MEMLOCK to 64MB
@@ -121,11 +141,6 @@ on boot
     write /proc/sys/net/ipv6/conf/rmnet_sdio6/accept_ra 2
     write /proc/sys/net/ipv6/conf/rmnet_sdio7/accept_ra 2
 
-
-# NFC: create data/nfc for nv storage
-    mkdir /data/nfc 770 nfc nfc
-    mkdir /data/nfc/param 770 nfc nfc
-
 # Assign TCP buffer thresholds to be ceiling value of technology maximums
 # Increased technology maximums should be reflected here.
     write /proc/sys/net/core/rmem_max  2097152
@@ -162,8 +177,12 @@ on boot
     chown system wifi /sys/module/bcmdhd/parameters/firmware_path
     chmod 0640 /sys/module/bcmdhd/parameters/firmware_path
 
-# msm specific files that need to be created on /data
+# mpt partition permission change after mount
 on post-fs-data
+    chown system system /mpt
+    chmod 0775 /mpt
+
+    # Create INTERNAL_STORAGE sdcard location
     mkdir /data/media 0770 media_rw media_rw
 
     # Create the directories used by the Wireless subsystem
@@ -171,7 +190,7 @@ on post-fs-data
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
     mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
     mkdir /data/misc/dhcp 0770 dhcp dhcp
-# to observe dnsmasq.leases file for dhcp information of soft ap.
+    # to observe dnsmasq.leases file for dhcp information of soft ap.
     chown dhcp system /data/misc/dhcp
 
     mkdir /data/misc/playready
@@ -495,3 +514,6 @@ on property:sys.perf.profile=2
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor performance
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor performance
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor performance
+
+on property:sys.boot_completed=1
+	write /sys/class/graphics/fb0/noti_boot 1
