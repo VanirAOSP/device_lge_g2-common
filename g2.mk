@@ -233,7 +233,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	debug.qualcomm.sns.libsensor1=e
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-	persist.sys.usb.config=mtp
+	persist.sys.usb.config=mtp,adb
 
 PRODUCT_PACKAGES += \
         lights.g2
