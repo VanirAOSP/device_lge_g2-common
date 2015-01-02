@@ -14,10 +14,6 @@
     <ctl name="Voip Tx Mute" id="1" value="500" />
     <ctl name="Voip Rx Gain" id="0" value="0" />
     <ctl name="Voip Rx Gain" id="1" value="20" />
-    <ctl name="Voip Mode Config" value="12" />
-    <ctl name="Voip Rate Config" value="0" />
-    <ctl name="Voip Evrc Min Max Rate Config" id="0" value="1" />
-    <ctl name="Voip Evrc Min Max Rate Config" id="1" value="4" />
     <ctl name="Voip Dtx Mode" value="0" />
     <ctl name="TTY Mode" value="Off" />
     <ctl name="LINEOUT1 Volume" value="12" />
@@ -73,7 +69,6 @@
     <ctl name="Voip_Tx Mixer SLIM_0_TX_Voip" value="0" />
     <ctl name="Voip_Tx Mixer SEC_AUX_PCM_TX_Voip" value="0" />
     <ctl name="SLIM_0_RX_Voice Mixer Voip" value="0" />
-    <ctl name="SEC_AUX_PCM_RX_Voip Mixer CSVoice" value="0" />
     <!-- 2013-10-24, jongyeol.yang,  voip loopback -->
     <ctl name="SLIMBUS_4_RX Audio Mixer MultiMedia1" value="0" />
     <ctl name="SLIMBUS_4_RX Audio Mixer MultiMedia2" value="0" />
@@ -87,8 +82,6 @@
     <!-- 2013-11-07, sangchul.yoon,  voice call recording -->
     <ctl name="MultiMedia1 Mixer VOC_REC_DL" value="0" />
     <ctl name="MultiMedia1 Mixer VOC_REC_UL" value="0" />
-    <ctl name="MultiMedia4 Mixer VOC_REC_UL" value="0" />
-    <ctl name="MultiMedia4 Mixer VOC_REC_DL" value="0" />
     <!-- 2013-11-07, sangchul.yoon,  voice call recording -->
     <ctl name="HDMI Mixer MultiMedia1" value="0" />
     <ctl name="HDMI Mixer MultiMedia2" value="0" />
@@ -151,7 +144,6 @@
     <ctl name="AIF1_CAP Mixer SLIM TX7" value="0" />
     <ctl name="AIF1_CAP Mixer SLIM TX8" value="0"/>
     <ctl name="CLASS_H_DSM MUX" value="ZERO" />
-    <ctl name="SPK DAC Switch" value="1" />
     <ctl name="RX7 HPF cut off" value="MIN_3DB_150Hz" />
     <ctl name="SLIM_0_RX Format" value="S16_LE" />
     <ctl name="SLIM_0_RX SampleRate" value="KHZ_48" />
@@ -463,7 +455,6 @@
         <ctl name="SLIM_0_RX Channels" value="One" />
         <ctl name="RX7 MIX1 INP1" value="RX1" />
         <ctl name="SPK DRV Volume" value="7" />
-        <ctl name="SPK DAC Switch" value="1" />
         <ctl name="COMP0 Switch" value="1" />
         <ctl name="RX7 HPF cut off" value="MIN_3DB_150Hz" />
         <ctl name="RX7 Digital Volume" value="64" />
@@ -628,7 +619,6 @@
         <ctl name="RX7 MIX1 INP2" value="RX2" />
         <ctl name="RX7 Digital Volume" value="60" />
         <ctl name="SPK DRV Volume" value="8" />
-        <ctl name="SPK DAC Switch" value="1" />
         <ctl name="RX7 HPF cut off" value="MIN_3DB_150Hz" />
     </path>
 
@@ -642,7 +632,6 @@
         <ctl name="RX7 MIX1 INP2" value="RX2" />
         <ctl name="RX7 Digital Volume" value="60" />
         <ctl name="SPK DRV Volume" value="8" />
-        <ctl name="SPK DAC Switch" value="1" />
         <ctl name="RX7 HPF cut off" value="MIN_3DB_150Hz" />
     </path>
 
