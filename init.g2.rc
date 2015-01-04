@@ -83,6 +83,9 @@ on boot
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1
 
+    #Make sure that 'Tap to Wake' is active on boot.
+    write /sys/devices/virtual/input/lge_touch/touch_gesture 1
+
     #Create QMUX deamon socket area
     mkdir /dev/socket/qmux_radio 0770 radio radio
     chmod 2770 /dev/socket/qmux_radio
