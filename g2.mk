@@ -96,6 +96,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Tag \
     com.android.nfc_extras \
+    NfcNci \
+    Nfc \
     libxml2
 
 # NFCEE access control
@@ -106,8 +108,12 @@ else
 endif
 
 # NFC access control + feature files + configuration
+ifneq ($(TARGET_DEVICE),ls980)
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf \
+    $(LOCAL_PATH)/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf
+endif
+
+PRODUCT_COPY_FILES += \
     $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml \
     frameworks/native/data/etc/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
     frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
