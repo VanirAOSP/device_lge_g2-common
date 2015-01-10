@@ -96,6 +96,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Tag \
     com.android.nfc_extras \
+    NfcNci \
     libxml2
 
 # NFCEE access control
