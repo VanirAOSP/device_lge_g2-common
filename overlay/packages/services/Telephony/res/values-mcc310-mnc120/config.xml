@@ -27,7 +27,5 @@
     <bool name="config_show_cdma" translatable="false">true</bool>
     <!-- CDMA activation goes through HFA [DO NOT TRANSLATE] -->
     <bool name="config_use_hfa_for_provisioning" translatable="false">true</bool>
-    <!-- Display carrier settings -->		
-    <bool name="config_carrier_settings_enable">true</bool>
 
 </resources>
