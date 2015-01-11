@@ -96,8 +96,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Tag \
     com.android.nfc_extras \
-    NfcNci \
-    Nfc \
     libxml2
 
 # NFCEE access control
@@ -117,7 +115,6 @@ PRODUCT_COPY_FILES += \
     $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml \
     frameworks/native/data/etc/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
     frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
-    frameworks/native/data/etc/android.hardware.nfc.hce.xml:system/etc/permissions/android.hardware.nfc.hce.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
         ro.sf.lcd_density=480 \
