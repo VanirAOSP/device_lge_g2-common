@@ -106,10 +106,8 @@ else
 endif
 
 # NFC access control + feature files + configuration
-ifneq ($(TARGET_DEVICE),ls980)
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/nfc/libnfc-brcm.conf:system/etc/libnfc-brcm.conf
-endif
 
 PRODUCT_COPY_FILES += \
     $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml \
