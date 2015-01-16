@@ -112,7 +112,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml \
     frameworks/native/data/etc/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
-    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml \
+    frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
         ro.sf.lcd_density=480 \
@@ -177,14 +177,14 @@ PRODUCT_PACKAGES += \
 	libaudio-resampler
 
 PRODUCT_PACKAGES += \
-        libmm-omxcore \
+	libffmpeg_utils \
+	libmm-omxcore \
 	libdivxdrmdecrypt \
 	libOmxVdec \
 	libOmxVenc \
 	libOmxCore \
 	libstagefrighthw \
-	libc2dcolorconvert \
-	mediaserver
+	libc2dcolorconvert
 
 # Audio effects
 PRODUCT_PACKAGES += \
