@@ -25,7 +25,7 @@ PRODUCT_AAPT_CONFIG := normal hdpi xhdpi xxhdpi
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
 PRODUCT_BOOT_JARS += \
-    $(PRODUCT_OUT)/system/framework/qcmediaplayer.jar
+    qcmediaplayer
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init.g2.rc:root/init.g2.rc \
@@ -186,7 +186,8 @@ PRODUCT_PACKAGES += \
 	libOmxVenc \
 	libOmxCore \
 	libstagefrighthw \
-	libc2dcolorconvert
+	libc2dcolorconvert \
+	mediaplayer
 
 # Audio effects
 PRODUCT_PACKAGES += \
