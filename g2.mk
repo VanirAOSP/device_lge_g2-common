@@ -186,6 +186,7 @@ PRODUCT_PACKAGES += \
 	libOmxVdec \
 	libOmxVenc \
 	libOmxCore \
+	libstagefright \
 	libstagefrighthw \
 	libc2dcolorconvert \
 	mediaplayer
