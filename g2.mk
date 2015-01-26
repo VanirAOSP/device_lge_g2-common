@@ -186,9 +186,10 @@ PRODUCT_PACKAGES += \
 	libOmxVdec \
 	libOmxVenc \
 	libOmxCore \
+	libstagefright \
 	libstagefrighthw \
-	libc2dcolorconvert \
-	mediaplayer
+	libstagefright_id3 \
+	libc2dcolorconvert
 
 # Audio effects
 PRODUCT_PACKAGES += \
