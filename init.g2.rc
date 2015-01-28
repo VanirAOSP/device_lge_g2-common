@@ -2,7 +2,14 @@ import init.g2.usb.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
-    write /sys/class/leds/lcd-backlight/brightness 150
+    chmod 661 /sys/block/mmcblk0/queue/scheduler
+    chmod 661 /sys/module/msm_thermal/parameters/intelli_enabled
+    chmod 661 /sys/module/msm_thermal/core_control/core_control_enabled
+    chmod 661 /sys/class/leds/lcd-backlight/brightness
+    write /sys/block/mmcblk0/queue/scheduler noop
+    write /sys/module/msm_thermal/parameters/intelli_enabled Y
+    write /sys/module/msm_thermal/core_control/core_control_enabled 1
+    write /sys/class/leds/lcd-backlight/brightness 200
 
 on init
     # Set permissions for persist partition
@@ -78,13 +85,13 @@ on early-boot
     setrlimit 8 67108864 67108864
 
 on boot
-    write /sys/devices/system/cpu/cpu0/online 1
+    # Bring all cores online
     write /sys/devices/system/cpu/cpu1/online 1
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1
 
-    #Make sure that 'Tap to Wake' is active on boot.
-    write /sys/devices/virtual/input/lge_touch/touch_gesture 1
+    # Set perf profile to Performance
+    setprop sys.perf.profile "2"
 
     #Create QMUX deamon socket area
     mkdir /dev/socket/qmux_radio 0770 radio radio
@@ -148,6 +155,14 @@ on boot
     write /proc/sys/net/ipv6/conf/rmnet_sdio5/accept_ra 2
     write /proc/sys/net/ipv6/conf/rmnet_sdio6/accept_ra 2
     write /proc/sys/net/ipv6/conf/rmnet_sdio7/accept_ra 2
+
+    # Subsytem Restart
+    #adsp
+    write /sys/bus/msm_subsys/devices/subsys0/restart_level "related"
+    #modem
+    write /sys/bus/msm_subsys/devices/subsys1/restart_level "related"
+    #venus
+    write /sys/bus/msm_subsys/devices/subsys2/restart_level "related"
 
     # Assign TCP buffer thresholds to be ceiling value of technology maximums
     # Increased technology maximums should be reflected here.
@@ -252,6 +267,9 @@ on post-fs-data
     # time_daemon storage
     mkdir /data/time/ 0700 system system
 
+    # Set perf profile back to balances
+    setprop sys.perf.profile "1"
+
     # Enable Power modes and set the CPU Freq Sampling rates
     write /sys/module/lpm_resources/enable_low_power/l2 2
     write /sys/module/lpm_resources/enable_low_power/pxo 1
@@ -298,11 +316,31 @@ on post-fs-data
     write /sys/module/msm_thermal/core_control/enabled 1
     write /dev/cpuctl/apps/cpu.notify_on_migrate 1
 
+    # Make sure min and max gpu clock is set via sysfs
+    write /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/min_freq 200000000
+    write /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/max_freq 450000000
+
+    # Remove Write Permissions for OTHER users on post-fs-data
+    chmod 664 /sys/devices/system/cpu/cpu1/online
+    chmod 664 /sys/devices/system/cpu/cpu2/online
+    chmod 664 /sys/devices/system/cpu/cpu3/online
+    chmod 664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chmod 664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chmod 664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chmod 664 /sys/class/kgsl/kgsl-3d0/max_gpuclk
+    chmod 664 /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/governor
+    chmod 664 /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/max_freq
+    chmod 664 /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/min_freq
+
+    # Make sure touch gestures are activated
+    chown system system /sys/devices/virtual/input/lge_touch/touch_gesture
+    chmod 664 /sys/devices/virtual/input/lge_touch/touch_gesture
+    write /sys/devices/virtual/input/lge_touch/touch_gesture 1
+
     # Torch
     chown system camera /sys/class/leds/led:flash_torch/brightness
     chmod 0660 /sys/class/leds/led:flash_torch/brightness
 
-    chown system system /sys/devices/virtual/input/lge_touch/touch_gesture
     chown root system /sys/devices/platform/tspdrv/nforce_timed
     chown root system /sys/devices/platform/kcal_ctrl.0/kcal
     chown root system /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
@@ -340,7 +378,7 @@ service rmt_storage /system/bin/rmt_storage
     user root
 
 service run-parts /system/xbin/run-parts
-    class main
+    class core
     user root
     group root system
 
@@ -412,7 +450,7 @@ service qcamerasvr /system/bin/mm-qcamera-daemon
     group camera system inet input
 
 service qseecomd /system/bin/qseecomd
-    class late_start
+    class core
     user root
     group root
 
@@ -420,7 +458,7 @@ service cnd /system/bin/cnd
     class late_start
     socket cnd stream 660 root inet
 
-service thermal-engine /system/bin/thermal-engine --time=60
+service thermal-engine /system/bin/thermal-engine --time=20
    class late_start
    user root
    group root
@@ -513,5 +551,5 @@ on property:sys.perf.profile=2
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor performance
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor performance
 
-on property:sys.boot_completed=1
-	write /sys/class/graphics/fb0/noti_boot 1
+on property:sys.boot_completed=1		
+    write /sys/class/graphics/fb0/noti_boot 1
