@@ -267,7 +267,7 @@ on post-fs-data
     # time_daemon storage
     mkdir /data/time/ 0700 system system
 
-    # Set perf profile back to balances
+    # Set perf profile back to balanced
     setprop sys.perf.profile "1"
 
     # Enable Power modes and set the CPU Freq Sampling rates
@@ -551,5 +551,5 @@ on property:sys.perf.profile=2
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor performance
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor performance
 
-on property:sys.boot_completed=1		
+on property:sys.boot_completed=1
     write /sys/class/graphics/fb0/noti_boot 1
