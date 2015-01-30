@@ -270,6 +270,21 @@ on post-fs-data
     # Set perf profile back to balanced
     setprop sys.perf.profile "1"
 
+    # cpu boost
+    write /sys/module/cpu_boost/parameters/boost_ms 10
+    write /sys/module/cpu_boost/parameters/sync_threshold 1728000
+    write /sys/module/cpu_boost/parameters/input_boost_freq 1497600
+    write /sys/module/cpu_boost/parameters/plug_boost_freq 1190400
+    write /sys/module/cpu_boost/parameters/input_boost_ms 40
+    write /sys/module/cpu_boost/parameters/load_based_syncs 1
+
+    # hotplug
+    write /sys/module/msm_hotplug/cpus_boosted 1
+    write /sys/module/msm_hotplug/down_lock_duration 500
+    write /sys/module/msm_hotplug/boost_lock_duration 2500
+    write /sys/module/msm_hotplug/update_rates "200 5:100 50:50 350:200"
+    write /sys/module/msm_hotplug/fast_lane_load 100
+
     # Enable Power modes and set the CPU Freq Sampling rates
     write /sys/module/lpm_resources/enable_low_power/l2 2
     write /sys/module/lpm_resources/enable_low_power/pxo 1
