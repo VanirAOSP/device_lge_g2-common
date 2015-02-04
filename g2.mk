@@ -180,10 +180,6 @@ PRODUCT_PACKAGES += \
 	libaudio-resampler
 
 PRODUCT_PACKAGES += \
-	libcamera_client \
-	libcommon_time_client \
-	libdownmix \
-	libldnhncr \
 	libffmpeg_utils \
 	libmm-omxcore \
 	libdivxdrmdecrypt \
@@ -195,33 +191,7 @@ PRODUCT_PACKAGES += \
 	libOmxVenc \
 	libOmxCore \
 	libc2dcolorconvert \
-	libregistermsext \
-	libscheduling_policy \
-	libstagefright \
-	libstagefrighthw \
-	libstagefright_m4vh263enc \
-	libstagefright_m4vh263dec \
-	libstagefright_http_support \
-	libstagefright_httplive \
-	libstagefright_httplivecustom \
-	libstagefright_id3 \
-	libstagefright_aacenc \
-	libstagefright_soft_aacdec \
-	libstagefright_soft_g711dec \
-	libstagefright_soft_gsmdec \
-	libstagefright_soft_mpeg4enc \
-	libstagefright_soft_mpeg4dec \
-	libstagefright_soft_opusdec \
-	libstagefright_soft_rawdec \
-	libstagefright_soft_vorbisdec \
-	libstagefright_soft_vpxenc \
-	libstagefright_soft_vpxdec \
-	record \
-	stagefright
-
-# Hardware codecs
-PRODUCT_PROPERTY_OVERRIDES += \
-        qcom.hw.aac.encoder=true
+	libstagefrighthw
 
 # Audio effects
 PRODUCT_PACKAGES += \
