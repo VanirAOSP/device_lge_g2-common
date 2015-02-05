@@ -1,7 +1,20 @@
 import init.g2.usb.rc
 
 on early-init
+    # Mount Kernel DebugFS
     mount debugfs debugfs /sys/kernel/debug
+
+    # Bring ALL Cores Online & Set Performance Gov
+    write /sys/devices/system/cpu/cpu0/online 1
+    write /sys/devices/system/cpu/cpu1/online 1
+    write /sys/devices/system/cpu/cpu2/online 1
+    write /sys/devices/system/cpu/cpu3/online 1
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor performance
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor performance
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor performance
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor performance
+
+    # Set Scheduler, Core Control, Brightness, etc
     chmod 0664 /sys/block/mmcblk0/queue/scheduler
     chmod 0664 /sys/module/msm_thermal/parameters/intelli_enabled
     chmod 0664 /sys/module/msm_thermal/core_control/core_control_enabled
@@ -89,9 +102,6 @@ on boot
     write /sys/devices/system/cpu/cpu1/online 1
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1
-
-    # Set perf profile to Performance
-    setprop sys.perf.profile "2"
 
     #Create QMUX deamon socket area
     mkdir /dev/socket/qmux_radio 0770 radio radio
@@ -267,9 +277,6 @@ on post-fs-data
     # time_daemon storage
     mkdir /data/time/ 0700 system system
 
-    # Set perf profile back to balanced
-    setprop sys.perf.profile "1"
-
     # Enable Power modes and set the CPU Freq Sampling rates
     write /sys/module/lpm_resources/enable_low_power/l2 2
     write /sys/module/lpm_resources/enable_low_power/pxo 1
@@ -311,6 +318,10 @@ on post-fs-data
     write /sys/devices/system/cpu/cpufreq/ondemand/middle_grid_load 40
     write /sys/devices/system/cpu/cpufreq/ondemand/high_grid_step 14
     write /sys/devices/system/cpu/cpufreq/ondemand/high_grid_load 50
+
+    # Start mpdecision
+    start mpdecision
+
     chown root system /sys/devices/system/cpu/mfreq
     chmod 0220 /sys/devices/system/cpu/mfreq
     write /sys/module/msm_thermal/core_control/enabled 1
@@ -550,6 +561,3 @@ on property:sys.perf.profile=2
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor performance
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor performance
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor performance
-
-on property:sys.boot_completed=1
-    write /sys/class/graphics/fb0/noti_boot 1
