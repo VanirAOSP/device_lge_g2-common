@@ -32,7 +32,6 @@ PRODUCT_COPY_FILES += \
 
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/audio_effects.conf:system/vendor/etc/audio_effects.conf \
     $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf \
     $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
@@ -117,16 +116,12 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PROPERTY_OVERRIDES += \
         ro.sf.lcd_density=480 \
 	ro.opengles.version=196608 \
-	ro.loki_enabled=1 \
-	persist.sys.strictmode.disable=true
+	ro.loki_enabled=1
 
 # Audio Configuration
 PRODUCT_PROPERTY_OVERRIDES += \
-	persist.audio.handset.mic.type=digital \
-	persist.audio.dualmic.config=endfire \
-	persist.audio.fluence.speaker=true \
 	persist.audio.fluence.voicecall=true \
-	persist.audio.fluence.voicerec=false \
+	persist.audio.dualmic.config=endfire \
 	audio.offload.buffer.size.kb=32 \
 	audio.offload.gapless.enabled=false \
 	av.offload.enable=true
@@ -177,25 +172,13 @@ PRODUCT_PACKAGES += \
 	libaudio-resampler
 
 PRODUCT_PACKAGES += \
-	libffmpeg_utils \
 	libmm-omxcore \
 	libdivxdrmdecrypt \
-	libOmxAacEnc \
-	libOmxAmrEnc \
-	libOmxEvrcEnc \
-	libOmxQcelp13Enc \
 	libOmxVdec \
 	libOmxVenc \
 	libOmxCore \
 	libc2dcolorconvert \
 	libstagefrighthw
-
-# Audio effects
-PRODUCT_PACKAGES += \
-	libqcomvisualizer \
-	libqcompostprocbundle \
-	libqcomvoiceprocessing \
-	libqcomvoiceprocessingdescriptors
 
 PRODUCT_PACKAGES += \
 	libloc_adapter \
@@ -251,6 +234,16 @@ PRODUCT_PACKAGES += \
         loki.sh \
         loki_tool_static_g2 \
         recovery-transform.sh
+
+# Audio effects
+PRODUCT_PACKAGES += \
+	libqcomvisualizer \
+	libqcompostprocbundle \
+	libqcomvoiceprocessing \
+	libqcomvoiceprocessingdescriptors
+
+PRODUCT_COPY_FILES += \
+        $(LOCAL_PATH)/configs/audio_effects.conf:system/vendor/etc/audio_effects.conf
 
 $(call inherit-product, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
 
