@@ -333,7 +333,7 @@ on post-fs-data
     chmod 664 /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/min_freq
 
     # Make sure touch gestures are activated
-    chown system system /sys/devices/virtual/input/lge_touch/touch_gesture
+    chown system radio /sys/devices/virtual/input/lge_touch/touch_gesture
     chmod 664 /sys/devices/virtual/input/lge_touch/touch_gesture
     write /sys/devices/virtual/input/lge_touch/touch_gesture 1
 
