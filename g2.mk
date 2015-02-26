@@ -30,6 +30,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ueventd.g2.rc:root/ueventd.g2.rc \
     $(LOCAL_PATH)/fstab.g2:root/fstab.g2
 
+$(call inherit-product-if-exists, vendor/lge/g2-common/g2-common-vendor.mk)
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf \
