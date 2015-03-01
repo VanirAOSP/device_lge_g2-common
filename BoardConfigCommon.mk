@@ -37,9 +37,8 @@ CLANG_TARGET_GLOBAL_CFLAGS += -Ofast -mfpu=neon-vfpv4 -mfloat-abi=softfp
 
 CLANG_TARGET_GLOBAL_CPPFLAGS += -Ofast -mfpu=neon-vfpv4 -mfloat-abi=softfp
 
-# Boot Animation Preload & Caching
+# Boot Animation Preload
 TARGET_BOOTANIMATION_PRELOAD := true
-TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 
 # Qcom optimizations
 TARGET_USE_QCOM_BIONIC_OPTIMIZATION := true
