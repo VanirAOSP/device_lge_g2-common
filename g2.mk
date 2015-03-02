@@ -218,6 +218,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	debug.qualcomm.sns.libsensor1=e
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+	dalvik.vm.dex2oat-Xms=32m \
+	dalvik.vm.dex2oat-Xmx=1024m \
 	persist.sys.usb.config=mtp
 
 PRODUCT_PACKAGES += \

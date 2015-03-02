@@ -1,23 +1,23 @@
 import init.g2.usb.rc
 
 on early-init
+    # Mount Kernel DebugFS
     mount debugfs debugfs /sys/kernel/debug
     write /sys/class/leds/lcd-backlight/brightness 150
 
 on init
-    chmod 0701 /mnt/media_rw
-    mkdir /mnt/media_rw/usb 0775 system system
-    # See storage config details at http://source.android.com/tech/storage/
-    mkdir /mnt/shell/emulated 0700 shell shell
-    mkdir /storage/emulated 0555 root root
-
     # Set permissions for persist partition
     mkdir /persist 0771 system system
     mkdir /firmware 0771 system system
+    mkdir /storage 0550 system sdcard_r
     mkdir /storage/usb 0000 system system
     mkdir /factory 0775 system system
-    mkdir /persist-lg 0755 system system
-    mkdir /mpt 0755 system system
+
+    # Setup permissions for shell/media/sdcard locations
+    mkdir /mnt/media_rw 0700 media_rw media_rw
+    mkdir /mnt/media_rw/usb 0775 system system
+    mkdir /mnt/shell/emulated 0700 shell shell
+    mkdir /storage/emulated 0555 root root
 
     export EXTERNAL_STORAGE /storage/emulated/legacy
     export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
@@ -37,18 +37,42 @@ on init
     setprop persist.radio.custom_ecc_voice "{515:117},{452:113,114,115}"
     setprop persist.radio.custom_ecc_hard "911,*911,#911,112,999,000,08,118,120,122,110,119,995,111,113,125,127,133"
 
-    mkdir /sns 0775 system system
-    mkdir /sns/cal 0771 system system
-
 on charger-fs
     mount ext4 /dev/block/platform/msm_sdcc.1/by-name/system  /system ro barrier=1
     start rmt_storage
 
 on fs
     mount_all ./fstab.g2
-    restorecon_recursive /sns
     write /sys/kernel/boot_adsp/boot 1
     setprop ro.crypto.fuse_sdcard true
+
+    # create mount point for LG Specific functions
+    mkdir /sns 0755 system system
+    mkdir /sns/cal 0771 system system
+    mkdir /persist-lg 0755 system system
+    mkdir /persist-lg/lgdata 0771 radio radio
+    mkdir /mpt 0755 system system
+
+    # Executing tune2fs to reserve some region in /data. (40MB)
+    exec /system/bin/tune2fs -u system -r 10240 /dev/block/platform/msm_sdcc.1/by-name/userdata
+
+    wait /dev/block/platform/msm_sdcc.1/by-name/sns
+    exec /system/bin/e2fsck -p /dev/block/platform/msm_sdcc.1/by-name/sns
+    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/sns /sns nosuid nodev barrier=1 noatime noauto_da_alloc errors=continue
+
+    restorecon_recursive /sns
+
+    wait /dev/block/platform/msm_sdcc.1/by-name/drm
+    exec /system/bin/e2fsck -p /dev/block/platform/msm_sdcc.1/by-name/drm
+    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/drm /persist-lg nosuid nodev barrier=1 noatime noauto_da_alloc errors=continue
+
+    wait /dev/block/platform/msm_sdcc.1/by-name/mpt
+    exec /system/bin/e2fsck -p /dev/block/platform/msm_sdcc.1/by-name/mpt
+    mount ext4 /dev/block/platform/msm_sdcc.1/by-name/mpt /mpt nodev nosuid barrier=1 noatime noauto_da_alloc errors=continue
+
+    # NFC: create data/nfc for nv storage
+    mkdir /data/nfc 770 nfc nfc
+    mkdir /data/nfc/param 770 nfc nfc
 
 on early-boot
     # set RLIMIT_MEMLOCK to 64MB
@@ -118,17 +142,11 @@ on boot
     write /proc/sys/net/ipv6/conf/rmnet_sdio6/accept_ra 2
     write /proc/sys/net/ipv6/conf/rmnet_sdio7/accept_ra 2
 
+    # Assign TCP buffer thresholds to be ceiling value of technology maximums
+    # Increased technology maximums should be reflected here.
+    write /proc/sys/net/core/rmem_max  2097152
+    write /proc/sys/net/core/wmem_max  2097152
 
-# NFC: create data/nfc for nv storage
-    mkdir /data/nfc 770 nfc nfc
-    mkdir /data/nfc/param 770 nfc nfc
-
-# Assign TCP buffer thresholds to be ceiling value of technology maximums
-# Increased technology maximums should be reflected here.
-    write /proc/sys/net/core/rmem_max  1220608
-    write /proc/sys/net/core/wmem_max  1220608
-
-on boot
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
     chmod 0660 /sys/class/rfkill/rfkill0/state
@@ -139,7 +157,7 @@ on boot
     restorecon /proc/bluetooth/sleep/lpm
     restorecon /proc/bluetooth/sleep/btwrite
 
-# lights perms
+    # lights perms
     chown system system /sys/class/leds/red/brightness
     chown system system /sys/class/leds/green/brightness
     chown system system /sys/class/leds/blue/brightness
@@ -150,8 +168,12 @@ on boot
     chown system wifi /sys/module/bcmdhd/parameters/firmware_path
     chmod 0640 /sys/module/bcmdhd/parameters/firmware_path
 
-# msm specific files that need to be created on /data
+# mpt partition permission change after mount
 on post-fs-data
+    chown system system /mpt
+    chmod 0775 /mpt
+
+    # Create INTERNAL_STORAGE sdcard location
     mkdir /data/media 0770 media_rw media_rw
 
     # Create the directories used by the Wireless subsystem
@@ -159,7 +181,7 @@ on post-fs-data
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
     mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
     mkdir /data/misc/dhcp 0770 dhcp dhcp
-# to observe dnsmasq.leases file for dhcp information of soft ap.
+    # to observe dnsmasq.leases file for dhcp information of soft ap.
     chown dhcp system /data/misc/dhcp
 
     mkdir /data/misc/playready
@@ -228,17 +250,18 @@ on post-fs-data
     write /sys/module/lpm_resources/enable_low_power/pxo 1
     write /sys/module/lpm_resources/enable_low_power/vdd_dig 1
     write /sys/module/lpm_resources/enable_low_power/vdd_mem 1
-    write /sys/module/pm_8x60/modes/cpu0/power_collapse/suspend_enabled 1
+    write /sys/module/pm_8x60/modes/cpu0/power_collapse/idle_enabled 0
+    write /sys/module/pm_8x60/modes/cpu1/power_collapse/idle_enabled 0
+    write /sys/module/pm_8x60/modes/cpu2/power_collapse/idle_enabled 0
+    write /sys/module/pm_8x60/modes/cpu3/power_collapse/idle_enabled 0
+    write /sys/module/pm_8x60/modes/cpu0/power_collapse/suspend_enabled 0
     write /sys/module/pm_8x60/modes/cpu1/power_collapse/suspend_enabled 1
     write /sys/module/pm_8x60/modes/cpu2/power_collapse/suspend_enabled 1
     write /sys/module/pm_8x60/modes/cpu3/power_collapse/suspend_enabled 1
-    write /sys/module/pm_8x60/modes/cpu0/power_collapse/idle_enabled 1
-    # From the original setup scriptage, revisions != 1.0 disable retention...
     write /sys/module/pm_8x60/modes/cpu0/retention/idle_enabled 0
     write /sys/module/pm_8x60/modes/cpu1/retention/idle_enabled 0
     write /sys/module/pm_8x60/modes/cpu2/retention/idle_enabled 0
     write /sys/module/pm_8x60/modes/cpu3/retention/idle_enabled 0
-    write /sys/module/msm_thermal/core_control/enabled 0
     write /sys/devices/system/cpu/cpu1/online 1
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1
@@ -247,15 +270,15 @@ on post-fs-data
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "ondemand"
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "ondemand"
     write /sys/devices/system/cpu/cpufreq/ondemand/sampling_rate 50000
-    write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold 90
     write /sys/devices/system/cpu/cpufreq/ondemand/io_is_busy 1
     write /sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor 4
     write /sys/devices/system/cpu/cpufreq/ondemand/down_differential 10
-    write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_multi_core 70
     write /sys/devices/system/cpu/cpufreq/ondemand/down_differential_multi_core 3
+    write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold 70
+    write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_any_cpu_load 70
+    write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_multi_core 70
     write /sys/devices/system/cpu/cpufreq/ondemand/optimal_freq 960000
     write /sys/devices/system/cpu/cpufreq/ondemand/sync_freq 960000
-    write /sys/devices/system/cpu/cpufreq/ondemand/up_threshold_any_cpu_load 80
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 300000
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 300000
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 300000
@@ -264,17 +287,31 @@ on post-fs-data
     write /sys/devices/system/cpu/cpufreq/ondemand/middle_grid_load 40
     write /sys/devices/system/cpu/cpufreq/ondemand/high_grid_step 14
     write /sys/devices/system/cpu/cpufreq/ondemand/high_grid_load 50
+
     chown root system /sys/devices/system/cpu/mfreq
     chmod 0220 /sys/devices/system/cpu/mfreq
-    write /sys/module/msm_thermal/core_control/enabled 1
     write /dev/cpuctl/apps/cpu.notify_on_migrate 1
+
+    # Remove Write Permissions for OTHER users on post-fs-data
+    chmod 664 /sys/devices/system/cpu/cpu1/online
+    chmod 664 /sys/devices/system/cpu/cpu2/online
+    chmod 664 /sys/devices/system/cpu/cpu3/online
+    chmod 664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chmod 664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chmod 664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chmod 664 /sys/class/kgsl/kgsl-3d0/max_gpuclk
+    chmod 664 /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/governor
+    chmod 664 /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/max_freq
+    chmod 664 /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/min_freq
+
+    # Make sure touch gestures are activated
+    chown system radio /sys/devices/virtual/input/lge_touch/touch_gesture
+    chmod 664 /sys/devices/virtual/input/lge_touch/touch_gesture
 
     # Torch
     chown system camera /sys/class/leds/led:flash_torch/brightness
     chmod 0660 /sys/class/leds/led:flash_torch/brightness
 
-    chown system radio /sys/devices/virtual/input/lge_touch/touch_gesture
-    chmod 0664 /sys/devices/virtual/input/lge_touch/touch_gesture
     chown root system /sys/devices/platform/tspdrv/nforce_timed
     chown root system /sys/devices/platform/kcal_ctrl.0/kcal
     chown root system /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
