@@ -175,7 +175,10 @@ PRODUCT_PACKAGES += \
     libqcomvisualizer \
     libqcompostprocbundle \
     libqcomvoiceprocessing \
-    libqcomvoiceprocessingdescriptors
+    libqcomvoiceprocessingdescriptors \
+    libwebrtc_audio_preprocessing \
+    libwebrtc_audio_coding \
+    libwebrtc_audio_coding_gnustl_static
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio_effects.conf:system/vendor/etc/audio_effects.conf
