@@ -78,7 +78,7 @@ WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_STA     := "/system/etc/firmware/fw_bcmdhd.bin"
 WIFI_DRIVER_FW_PATH_AP      := "/system/etc/firmware/fw_bcmdhd_apsta.bin"
 
-BOARD_EGL_CFG := device/lge/g2-common/egl.cfg
+BOARD_EGL_CFG := device/lge/g2-common/configs/egl.cfg
 
 USE_OPENGL_RENDERER := true
 TARGET_USES_ION := true
@@ -100,7 +100,7 @@ BOARD_HAVE_LOW_LATENCY_AUDIO := true
 COMMON_GLOBAL_CFLAGS += -DLPA_DEFAULT_BUFFER_SIZE=512
 
 RECOVERY_FSTAB_VERSION = 2
-TARGET_RECOVERY_FSTAB = device/lge/g2-common/fstab.g2
+TARGET_RECOVERY_FSTAB = device/lge/g2-common/rootdir/etc/fstab.g2
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_23x41.h\"
 ENABLE_LOKI_RECOVERY := true
 TARGET_RECOVERY_PIXEL_FORMAT := "RGBX_8888"
@@ -121,6 +121,9 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/lge/g2-common/bluetooth
 BOARD_BLUEDROID_VENDOR_CONF := device/lge/g2-common/bluetooth/vnd_g2.txt
 
+# Fonts
+EXTENDED_FONT_FOOTPRINT := true
+
 # GPS
 TARGET_NO_RPC := true
 
@@ -133,7 +136,7 @@ BOARD_HARDWARE_CLASS := device/lge/g2-common/cmhw/
 include device/qcom/sepolicy/sepolicy.mk
 
 BOARD_SEPOLICY_DIRS += \
-        device/lge/g2-common/sepolicy
+    device/lge/g2-common/sepolicy
 
 BOARD_RIL_CLASS := ../../../device/lge/g2-common/ril/
 TARGET_RELEASETOOLS_EXTENSIONS := device/lge/g2-common/releasetools
@@ -144,7 +147,7 @@ BOARD_USES_QC_TIME_SERVICES := true
 # Shader cache config options
 # Maximum size of the  GLES Shaders that can be cached for reuse.
 # Increase the size if shaders of size greater than 12KB are used.
-MAX_EGL_CACHE_KEY_SIZE := 16*1024
+MAX_EGL_CACHE_KEY_SIZE := 12*1024
 
 # Maximum GLES shader cache size for each app to store the compiled shader
 # binaries. Decrease the size if RAM or Flash Storage size is a limitation
@@ -155,7 +158,7 @@ MAX_EGL_CACHE_ENTRY_SIZE:= 1024*1024
 
 # Surfaceflinger optimization for VD surfaces
 TARGET_FORCE_HWC_FOR_VIRTUAL_DISPLAYS := true
-NUM_FRAMEBUFFER_SURFACE_BUFFERS := 4
+NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 
 TARGET_USES_LOGD := false
 

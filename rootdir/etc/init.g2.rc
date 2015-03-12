@@ -3,6 +3,7 @@ import init.g2.usb.rc
 on early-init
     # Mount Kernel DebugFS
     mount debugfs debugfs /sys/kernel/debug
+    write /sys/devices/virtual/input/lge_touch/touch_gesture 1
     write /sys/class/leds/lcd-backlight/brightness 150
 
 on init
@@ -106,11 +107,8 @@ on boot
 
     # Remove write permissions to video related nodes
     chmod 0664 /sys/devices/virtual/graphics/fb1/hpd
-    chmod 0664 /sys/devices/virtual/graphics/fb1/video_mode
-    chmod 0664 /sys/devices/virtual/graphics/fb1/format_3d
 
     # Change owner and group for media server and surface flinger
-    chown system system /sys/devices/virtual/graphics/fb1/format_3d
     chown system system /sys/devices/virtual/graphics/fb1/hpd
 
     #For bridgemgr daemon to inform the USB driver of the correct transport
@@ -164,6 +162,12 @@ on boot
     chown system system /sys/class/g2_rgb_led/use_patterns/blink_patterns
     chown system system /sys/class/leds/button-backlight1/brightness
     chown system system /sys/class/leds/button-backlight2/brightness
+    chmod 0664 /sys/class/leds/red/brightness
+    chmod 0664 /sys/class/leds/green/brightness
+    chmod 0664 /sys/class/leds/blue/brightness
+    chmod 0664 /sys/class/g2_rgb_led/use_patterns/blink_patterns
+    chmod 0664 /sys/class/leds/button-backlight1/brightness
+    chmod 0664 /sys/class/leds/button-backlight2/brightness
 
     chown system wifi /sys/module/bcmdhd/parameters/firmware_path
     chmod 0640 /sys/module/bcmdhd/parameters/firmware_path
@@ -245,7 +249,7 @@ on post-fs-data
     # time_daemon storage
     mkdir /data/time/ 0700 system system
 
-    # Enable Power modes and set the CPU Freq Sampling rates
+    # Enable Power, CPU, & GPU modes and settings
     write /sys/module/lpm_resources/enable_low_power/l2 2
     write /sys/module/lpm_resources/enable_low_power/pxo 1
     write /sys/module/lpm_resources/enable_low_power/vdd_dig 1
@@ -292,35 +296,51 @@ on post-fs-data
     chmod 0220 /sys/devices/system/cpu/mfreq
     write /dev/cpuctl/apps/cpu.notify_on_migrate 1
 
-    # Remove Write Permissions for OTHER users on post-fs-data
-    chmod 664 /sys/devices/system/cpu/cpu1/online
-    chmod 664 /sys/devices/system/cpu/cpu2/online
-    chmod 664 /sys/devices/system/cpu/cpu3/online
-    chmod 664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-    chmod 664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-    chmod 664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
-    chmod 664 /sys/class/kgsl/kgsl-3d0/max_gpuclk
-    chmod 664 /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/governor
-    chmod 664 /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/max_freq
-    chmod 664 /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/min_freq
+    # Setup system GPU devices & settings
+    chown system system /sys/devices/system/cpu/cpu1/online
+    chown system system /sys/devices/system/cpu/cpu2/online
+    chown system system /sys/devices/system/cpu/cpu3/online
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chown system system /sys/class/kgsl/kgsl-3d0/max_gpuclk
+    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/min_freq
+    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/governor
+    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/max_freq
+    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/min_freq
+    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/target_freq
+    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/cur_freq
+    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/available_frequencies
+    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/available_governors
 
-    # Make sure touch gestures are activated
+    # Remove Write Permissions for OTHERS
+    chmod 0664 /sys/devices/system/cpu/cpu1/online
+    chmod 0664 /sys/devices/system/cpu/cpu2/online
+    chmod 0664 /sys/devices/system/cpu/cpu3/online
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chmod 0664 /sys/class/kgsl/kgsl-3d0/max_gpuclk
+    chmod 0664 /sys/class/kgsl/kgsl-3d0/devfreq/min_freq
+    chmod 0664 /sys/class/kgsl/kgsl-3d0/devfreq/governor
+    chmod 0664 /sys/class/kgsl/kgsl-3d0/devfreq/max_freq
+    chmod 0664 /sys/class/kgsl/kgsl-3d0/devfreq/min_freq
+    chmod 0664 /sys/class/kgsl/kgsl-3d0/devfreq/target_freq
+    chmod 0644 /sys/class/kgsl/kgsl-3d0/devfreq/cur_freq
+    chmod 0644 /sys/class/kgsl/kgsl-3d0/devfreq/available_frequencies
+    chmod 0644 /sys/class/kgsl/kgsl-3d0/devfreq/available_governors
+
+    # Touch gesture
     chown system radio /sys/devices/virtual/input/lge_touch/touch_gesture
-    chmod 664 /sys/devices/virtual/input/lge_touch/touch_gesture
+    chmod 0664 /sys/devices/virtual/input/lge_touch/touch_gesture
 
     # Torch
     chown system camera /sys/class/leds/led:flash_torch/brightness
     chmod 0660 /sys/class/leds/led:flash_torch/brightness
 
     chown root system /sys/devices/platform/tspdrv/nforce_timed
-    chown root system /sys/devices/platform/kcal_ctrl.0/kcal
-    chown root system /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
     chmod 0664 /sys/devices/platform/tspdrv/nforce_timed
-    chmod 0664 /sys/devices/platform/kcal_ctrl.0/kcal
-    chmod 0664 /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
     restorecon /sys/devices/platform/tspdrv/nforce_timed
-    restorecon /sys/devices/platform/kcal_ctrl.0/kcal
-    restorecon /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
 
 on charger
     trigger charger-fs
