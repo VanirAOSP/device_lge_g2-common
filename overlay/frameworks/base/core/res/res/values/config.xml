@@ -305,4 +305,14 @@
     <integer name="config_multiuserMaximumUsers">4</integer>
     <!--  Whether Multiuser UI should be shown -->
     <bool name="config_enableMultiUserUI">true</bool>
+
+    <!-- Base "touch slop" value used by ViewConfiguration as a
+         movement threshold where scrolling should begin. -->
+    <dimen name="config_viewConfigurationTouchSlop">4dp</dimen>
+
+    <!-- Minimum velocity to initiate a fling, as measured in dp/second. -->
+    <dimen name="config_viewMinFlingVelocity">50dp</dimen>
+    <!-- Maximum velocity to initiate a fling, as measured in dp/second. -->
+    <dimen name="config_viewMaxFlingVelocity">10000dp</dimen>
+
 </resources>
