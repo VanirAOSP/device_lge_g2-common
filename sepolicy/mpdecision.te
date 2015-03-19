@@ -3,6 +3,8 @@ allow mpdecision self:process execmem;
 type_transition mpdecision socket_device:sock_file mpctl_socket;
 
 allow mpdecision socket_device:dir add_name;
+allow mpdecision socket_device:file write;
+allow mpdecision tmpfs:file write;
 
 allow mpdecision mpdecision_data:file { rw_file_perms };
 
