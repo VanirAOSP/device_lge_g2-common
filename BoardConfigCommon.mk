@@ -22,12 +22,8 @@ TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_VARIANT := krait
 TARGET_ARCH_VARIANT_CPU := cortex-a15
 ARCH_ARM_HAVE_TLS_REGISTER := true
-TARGET_KERNEL_TOOLCHAIN_VERSION := linaro-4.10
+TARGET_KERNEL_TOOLCHAIN_VERSION := linaro-4.9
 TARGET_KERNEL_USE_AOSP_TOOLCHAIN := false
-
-ifeq ($(HOST_OS),linux)
-    HOST_TOOLCHAIN_PREFIX := prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.15-4.8/bin/x86_64-linux-
-endif
 
 TARGET_GLOBAL_CFLAGS += -O3 -mfpu=neon-vfpv4 -mfloat-abi=softfp -mvectorize-with-neon-quad
 
