@@ -347,11 +347,6 @@ on post-fs-data
     restorecon /sys/devices/platform/kcal_ctrl.0/kcal
     restorecon /sys/devices/platform/kcal_ctrl.0/kcal_ctrl
 
-    # Display Calibration
-    chown system system /sys/devices/virtual/graphics/fb0/rgb
-    chmod 0664 /sys/devices/virtual/graphics/fb0/rgb
-    restorecon /sys/devices/virtual/graphics/fb0/rgb
-
 on charger
     trigger charger-fs
     # Enable Power modes and set the CPU Freq Sampling rates
