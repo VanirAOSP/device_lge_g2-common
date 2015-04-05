@@ -71,8 +71,3 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 # QCOM Perf lib
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=/vendor/lib/libqc-opt.so
-
-# Dex2Oat Tweaks
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    dalvik.vm.dex2oat-Xms=32m \
-    dalvik.vm.dex2oat-Xmx=1024m
