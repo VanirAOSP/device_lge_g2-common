@@ -436,10 +436,15 @@ service cnd /system/bin/cnd
     class late_start
     socket cnd stream 660 root inet
 
-service thermal-engine /system/bin/thermal-engine
+service thermal-engine /system/bin/thermal-engine --config-file /system/etc/thermal-engine.conf
    class late_start
    user root
-   group root
+   group root system
+
+service thermald /system/bin/thermald --config-file /system/etc/thermald.conf
+  class late_start
+  user root
+  group root system
 
 service irsc_util /system/bin/logwrapper /system/bin/irsc_util "/etc/sec_config"
     class main
