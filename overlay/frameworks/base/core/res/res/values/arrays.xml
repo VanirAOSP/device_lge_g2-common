@@ -32,19 +32,4 @@
         <item>soft_reboot</item>
         <item>recovery</item>
     </string-array>
-
-    <!-- Configure mobile tcp buffer sizes in the form:
-         rat-name:rmem_min,rmem_def,rmem_max,wmem_min,wmem_def,wmem_max
-         If no value is found for rat-name, system default will be used. -->
-    <string-array name="config_mobile_tcp_buffers">
-        <item>edge:6144,26280,35040,4096,16384,35040</item>
-        <item>gprs:6144,8760,11680,4096,8760,11680</item>
-        <item>umts:4096,87380,110208,4096,16384,110208</item>
-        <item>hsdpa:6144,262144,1048576,6144,262144,1048576</item>
-        <item>hsupa:4094,87380,110208,4096,16384,110208</item>
-        <item>hspa:4096,87380,262144,4096,16384,262144</item>
-        <item>hspap:4096,87380,262144,4096,16384,262144</item>
-        <item>lte:524288,1048576,2097152,87380,110208,1048576</item>
-    </string-array>
-
 </resources>
