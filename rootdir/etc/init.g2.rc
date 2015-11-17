@@ -43,7 +43,8 @@ on early-init
 
 on init
     # Preload the BoringSSL wrapper
-    export LD_PRELOAD "/system/lib/libboringssl-compat.so:/system/lib/liblge.so"
+    export LD_PRELOAD "/system/lib/libboringssl-compat.so"
+    export LD_SHIM_LIBS /system/lib/libril.so|libril_shim.so
 
     mkdir /persist 0771 system system
     mkdir /factory 0775 system system
@@ -123,6 +124,9 @@ on post-fs-data
     restorecon /data/system/sensors/settings
     chmod 0664 /data/system/sensors/settings
     chown system /data/system/sensors/settings
+
+    # Set permissions on persist
+    restorecon_recursive /persist-lg
 
     # Create /data/time folder for time-services
     mkdir /data/time/ 0700 system system
@@ -321,11 +325,6 @@ service audiod /system/bin/audiod
     user system
     group system
 
-service bridgemgrd /system/bin/bridgemgrd
-    class main
-    user radio
-    group radio
-
 service charger /sbin/healthd -c
     class charger
     critical
@@ -359,19 +358,6 @@ service netmgrd /system/bin/netmgrd
     user root
     group radio
 
-service ppd /system/bin/mm-pp-daemon
-    class late_start
-    disabled
-    user system
-    socket pps stream 0660 system system
-    group system graphics
-
-on property:init.svc.surfaceflinger=stopped
-    stop ppd
-
-on property:init.svc.surfaceflinger=running
-    start ppd
-
 service qcamerasvr /system/bin/mm-qcamera-daemon
     class late_start
     user camera
@@ -400,7 +386,12 @@ service sensors /system/bin/sensors.qcom
 service set_baseband /system/bin/sh /system/etc/set_baseband.sh
     class late_start
     user root
+    seclabel u:r:set_baseband:s0
     oneshot
+    disabled
+
+on property:sys.boot_completed=1
+    start set_baseband
 
 service thermal-engine /system/bin/thermal-engine
     class main
