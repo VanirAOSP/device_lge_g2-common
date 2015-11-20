@@ -24,27 +24,7 @@ TARGET_BOARD_PLATFORM_GPU := qcom-adreno330
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := krait
-TARGET_ARCH_VARIANT_CPU := cortex-a15
-ARCH_ARM_HAVE_TLS_REGISTER := true
-TARGET_KERNEL_TOOLCHAIN_VERSION := linaro-4.9
-TARGET_KERNEL_USE_AOSP_TOOLCHAIN := false
-
-TARGET_GLOBAL_CFLAGS += -O3 -mfpu=neon-vfpv4 -mfloat-abi=softfp -mvectorize-with-neon-quad
-
-TARGET_GLOBAL_CPPFLAGS += -O3 -mfpu=neon-vfpv4 -mfloat-abi=softfp -mvectorize-with-neon-quad
-
-CLANG_TARGET_GLOBAL_CFLAGS += -Ofast -mfpu=neon-vfpv4 -mfloat-abi=softfp
-
-CLANG_TARGET_GLOBAL_CPPFLAGS += -Ofast -mfpu=neon-vfpv4 -mfloat-abi=softfp
-
-TARGET_USE_QCOM_BIONIC_OPTIMIZATION := true
-
-TARGET_USE_KRAIT_BIONIC_OPTIMIZATION := true
-TARGET_USE_KRAIT_PLD_SET := true
-TARGET_KRAIT_BIONIC_PLDOFFS := 10
-TARGET_KRAIT_BIONIC_PLDTHRESH := 10
-TARGET_KRAIT_BIONIC_BBTHRESH := 64
-TARGET_KRAIT_BIONIC_PLDSIZE := 64
+USE_CLANG_PLATFORM_BUILD := true
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := galbi
