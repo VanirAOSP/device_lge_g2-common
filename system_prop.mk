@@ -95,6 +95,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     rild.libpath=/vendor/lib/libril-qc-qmi-1.so \
+    ro.ril.telephony.mqanelements=5 \
     ro.telephony.ril_class=LgeLteRIL
 
 # Sensors
