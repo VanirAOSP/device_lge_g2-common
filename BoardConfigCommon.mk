@@ -139,3 +139,7 @@ BOARD_WLAN_DEVICE           := bcmdhd
 WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_STA     := "/system/etc/firmware/fw_bcmdhd.bin"
 WIFI_DRIVER_FW_PATH_AP      := "/system/etc/firmware/fw_bcmdhd_apsta.bin"
+
+#Speed up flash time
+BOARD_SUPPRESS_SECURE_ERASE := true
+COMMON_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
