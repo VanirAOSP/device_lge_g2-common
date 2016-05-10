@@ -88,9 +88,6 @@ TARGET_POWERHAL_VARIANT := qcom
 # Fonts
 EXTENDED_FONT_FOOTPRINT := true
 
-# Init
-TARGET_INIT_VENDOR_LIB := libinit_msm
-
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
 
