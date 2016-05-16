@@ -25,7 +25,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Display
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.hwc.mdpcomp.enable=true \
+    persist.hwc.mdpcomp.enable=false \
+    persist.sys.ui.hw=true \
     ro.opengles.version=196608 \
     ro.sf.lcd_density=480
 
