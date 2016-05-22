@@ -26,6 +26,9 @@ TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := krait
 USE_CLANG_PLATFORM_BUILD := true
 
+#Opts
+USE_O3 := true
+
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := galbi
 TARGET_NO_BOOTLOADER := true
