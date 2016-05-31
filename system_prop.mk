@@ -7,10 +7,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
     af.fast_track_multiplier=1 \
     audio_hal.period_size=192 \
     persist.audio.dualmic.config=endfire \
-    persist.audio.fluence.audiorec=true \
-    persist.audio.fluence.voicecall=true \
-    ro.qc.sdk.audio.fluencetype=fluence \
     use.voice.path.for.pcm.voip=true
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.audio.fluence.audiorec=false \
+    persist.audio.fluence.speaker=true \
+    persist.audio.fluence.voicecall=true \
+    persist.audio.fluence.voicerec=false \
+    ro.qc.sdk.audio.fluencetype=fluence
 
 # Bluetooth
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -65,11 +69,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Radio
 PRODUCT_PROPERTY_OVERRIDES += \
-    persist.radio.custom_ecc=1 \
-    persist.radio.custom_ecc_mcc={234,235,424,426,427,430,431:999},{334:060,066},{422:9999},{730:133} \
-    persist.radio.custom_ecc_mcc_ex={450:111,112,113,119,122,125,127},{724:190},{440,441:110,118,119,112,911} \
-    persist.radio.custom_ecc_voice={515:117},{452:113,114,115} \
-    persist.radio.custom_ecc_hard=911,*911,#911,112,999,000,08,118,120,122,110,119,995,111,113,125,127,133
+    persist.radio.custom_ecc=1
 
 PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=wlan0 \
@@ -135,4 +135,5 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Wifi
 PRODUCT_PROPERTY_OVERRIDES += \
+    ro.data.large_tcp_window_size=true \
     wifi.interface=wlan0
