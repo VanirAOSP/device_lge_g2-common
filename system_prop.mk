@@ -44,6 +44,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.gps.agps_provider=1
 
 # Media/offload
+# TODO: Re-enable when it works
+PRODUCT_PROPERTY_OVERRIDES += \
+    audio.offload.disable=true
+
 PRODUCT_PROPERTY_OVERRIDES += \
     audio.offload.buffer.size.kb=32 \
     audio.offload.gapless.enabled=true \
@@ -128,7 +132,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     debug.qualcomm.sns.daemon=e \
     debug.qualcomm.sns.libsensor1=e \
     persist.debug.sensors.hal=e \
-    persist.debug.ar.hal=e
+    persist.debug.ar.hal=e \
+    persist.sys.ssr.enable_debug=0
 
 # Wifi
 PRODUCT_PROPERTY_OVERRIDES += \
