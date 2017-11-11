@@ -25,6 +25,9 @@ TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_VARIANT := krait
 
+# Binder API version
+TARGET_USES_64_BIT_BINDER := true
+
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := galbi
 TARGET_NO_BOOTLOADER := true
@@ -35,6 +38,7 @@ BOARD_CUSTOM_BOOTIMG := true
 BOARD_CUSTOM_BOOTIMG_MK := device/lge/g2-common/releasetools/mkbootimg.mk
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=g2
+BOARD_KERNEL_IMAGE_NAME := zImage
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x05000000 --tags_offset 0x00000100
@@ -62,8 +66,8 @@ BOARD_CHARGING_CMDLINE_NAME := "androidboot.mode"
 BOARD_CHARGING_CMDLINE_VALUE := "chargerlogo"
 BOARD_CHARGER_ENABLE_SUSPEND := true
 
-# CMHW
-BOARD_HARDWARE_CLASS := device/lge/g2-common/cmhw/
+# LINEAGEHW
+BOARD_HARDWARE_CLASS := device/lge/g2-common/lineagehw/
 TARGET_TAP_TO_WAKE_NODE := "/sys/devices/virtual/input/lge_touch/touch_gesture"
 
 # Display
