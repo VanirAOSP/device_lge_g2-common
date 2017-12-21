@@ -36,19 +36,18 @@ if [ ! -f "$HELPER" ]; then
 fi
 . "$HELPER"
 
-# default to not sanitizing the vendor folder before extraction
-clean_vendor=false
+# Default to sanitizing the vendor folder before extraction
+CLEAN_VENDOR=true
 
 while [ "$1" != "" ]; do
     case $1 in
-        -p | --path )           shift
-                                SRC=$1
+        -n | --no-cleanup )     CLEAN_VENDOR=false
                                 ;;
         -s | --section )        shift
                                 SECTION=$1
-                                clean_vendor=false
+                                CLEAN_VENDOR=false
                                 ;;
-        -c | --clean-vendor )   clean_vendor=true
+        * )                     SRC=$1
                                 ;;
     esac
     shift
@@ -59,12 +58,12 @@ if [ -z "$SRC" ]; then
 fi
 
 # Initialize the helper for common device
-setup_vendor "$DEVICE_COMMON" "$VENDOR" "$CM_ROOT" true $clean_vendor
+setup_vendor "$DEVICE_COMMON" "$VENDOR" "$CM_ROOT" true $CLEAN_VENDOR
 
 extract "$MY_DIR"/proprietary-files.txt "$SRC" "$SECTION"
 
 # Initialize the helper for device
-setup_vendor "$DEVICE" "$VENDOR" "$CM_ROOT" false $clean_vendor
+setup_vendor "$DEVICE" "$VENDOR" "$CM_ROOT" false $CLEAN_VENDOR
 
 extract "$MY_DIR"/../$DEVICE/proprietary-files.txt "$SRC" "$SECTION"
 
